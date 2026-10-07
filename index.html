@@ -90,7 +90,7 @@
         </div>
         <div class="glass-panel p-4 rounded-none text-center" style="border: 1px solid rgba(168, 85, 247, 0.5); box-shadow: 0 0 10px rgba(168,85,247,0.3), inset 0 0 10px rgba(168,85,247,0.1);">
             <p class="text-purple-400/70 text-xs font-bold uppercase tracking-wider cyber-font">Profit Factor</p>
-            <p class="text-3xl font-black text-slate-500 mt-1">0.0</p>
+            <p class="text-3xl font-black text-slate-500 mt-1" id="stat-pf">0.0</p>
         </div>
     </div>
 
@@ -130,13 +130,7 @@
             <div class="glass-panel neon-border-red p-5 rounded-none bg-black/60">
                 <h2 class="text-xl font-bold mb-3 neon-text-red">> OVERRIDE: ACTIVE_SETUP</h2>
                 <div id="ai-signal-box" class="p-4 border border-red-500/30 bg-red-950/20">
-                    <h3 class="neon-text-red font-black text-2xl mb-2">SELL LIMIT</h3>
-                    <ul class="text-red-200 space-y-2 text-sm cyber-font">
-                        <li class="border-b border-red-900/50 pb-1"><span class="text-red-400">TARGET_ZONE:</span> $4,145 - $4,152</li>
-                        <li class="border-b border-red-900/50 pb-1"><span class="text-red-400">STOP_LOSS:</span> $4,165</li>
-                        <li class="border-b border-red-900/50 pb-1"><span class="text-red-400">TAKE_PROFIT:</span> $4,110</li>
-                        <li class="pt-1"><span class="text-red-400">AI_CONFIDENCE:</span> 9/10</li>
-                    </ul>
+                    <!-- Dynamic Signal Content Here -->
                 </div>
             </div>
 
@@ -166,7 +160,7 @@
 
     <!-- Trade Performance (CLEARED) -->
     <div class="mt-6 glass-panel p-6 rounded-none relative z-10">
-        <h2 class="text-xl font-bold mb-4 neon-text-cyan">> EXECUTION_LOG // DAY 1</h2>
+        <h2 class="text-xl font-bold mb-4 neon-text-cyan">> EXECUTION_LOG // ONGOING</h2>
         <div class="overflow-x-auto">
             <table class="w-full text-left border-collapse text-sm text-cyan-100 min-w-[700px] font-mono">
                 <thead>
@@ -181,16 +175,7 @@
                     </tr>
                 </thead>
                 <tbody id="trade-history-body">
-                    <!-- Hanya sinyal perdana hari ini -->
-                    <tr class="wait-row border-b border-cyan-900/30">
-                        <td class="p-3">7 OCT 26</td>
-                        <td class="p-3 font-bold neon-text-red">SELL</td>
-                        <td class="p-3">$4,150.00</td>
-                        <td class="p-3">$4,110.00</td>
-                        <td class="p-3">$4,165.00</td>
-                        <td class="p-3"><span class="bg-yellow-500/20 text-yellow-400 border border-yellow-500/50 px-2 py-1 text-xs">PENDING</span></td>
-                        <td class="p-3 text-slate-500">_ _ _ _</td>
-                    </tr>
+                    <!-- Dynamic History rows -->
                 </tbody>
             </table>
         </div>
@@ -202,14 +187,7 @@
         <div class="glass-panel p-6 rounded-none border-l-4 border-l-cyan-500">
             <h2 class="text-xl font-bold mb-4 neon-text-cyan">> MACRO_DATASTREAM</h2>
             <div id="ai-macro-report" class="space-y-4 text-cyan-100 text-sm leading-relaxed font-mono">
-                <div class="bg-cyan-950/30 p-3 border border-cyan-900/50">
-                    <h3 class="font-bold text-cyan-300 text-xs uppercase mb-1 tracking-widest">// DXY & YIELDS</h3>
-                    <p>Dolar AS mendominasi (10-Yr @ 5.3%). Emas tertekan keras oleh gravitasi suku bunga.</p>
-                </div>
-                <div class="bg-cyan-950/30 p-3 border border-cyan-900/50">
-                    <h3 class="font-bold text-cyan-300 text-xs uppercase mb-1 tracking-widest">// GEOPOLITICS_&_LIQUIDITY</h3>
-                    <p>Konflik -> Minyak Naik -> Inflasi Naik -> Suku Bunga Ditahan. Retail terjebak posisi LONG (74%). Institusi bersiap melakukan 'Stop Loss Sweep' ke arah bawah.</p>
-                </div>
+                <!-- Dynamic Macro Content -->
             </div>
         </div>
 
@@ -235,8 +213,84 @@
     </div>
 
     <footer class="mt-12 text-center text-cyan-700 text-xs pb-8 cyber-font tracking-widest relative z-10">
-        SYSTEM_VER: DAY 1 // BLACKBOX NEURAL NETWORK // UNAUTHORIZED ACCESS PROHIBITED
+        SYSTEM_VER: <span id="system-ver">DAY 1</span> // BLACKBOX NEURAL NETWORK // UNAUTHORIZED ACCESS PROHIBITED
     </footer>
 
+    <script src="data.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            if (typeof tradeData !== 'undefined') {
+                document.getElementById('ai-update-time').innerText = tradeData.last_update + " // ONLINE";
+                document.getElementById('stat-winrate').innerText = tradeData.winrate;
+                document.getElementById('stat-trades').innerText = tradeData.total_trades;
+                document.getElementById('stat-pips').innerText = tradeData.pips_gained;
+                document.getElementById('stat-pf').innerText = tradeData.profit_factor;
+                document.getElementById('system-ver').innerText = tradeData.total_trades > 0 ? "DAY " + (parseInt(tradeData.total_trades)+1) : "DAY 1";
+
+                // Update Signal Box
+                let signalClass = "neon-text-red";
+                let signalTextClass = "text-red-400";
+                let signalBorder = "border-red-900/50";
+                
+                if (tradeData.signal.type.includes("BUY")) {
+                    signalClass = "neon-text-green";
+                    signalTextClass = "text-green-400";
+                    signalBorder = "border-green-900/50";
+                }
+
+                document.getElementById('ai-signal-box').innerHTML = `
+                    <h3 class="${signalClass} font-black text-2xl mb-2">${tradeData.signal.type}</h3>
+                    <ul class="text-gray-200 space-y-2 text-sm cyber-font">
+                        <li class="border-b ${signalBorder} pb-1"><span class="${signalTextClass}">TARGET_ZONE:</span> ${tradeData.signal.entry}</li>
+                        <li class="border-b ${signalBorder} pb-1"><span class="${signalTextClass}">STOP_LOSS:</span> ${tradeData.signal.sl}</li>
+                        <li class="border-b ${signalBorder} pb-1"><span class="${signalTextClass}">TAKE_PROFIT:</span> ${tradeData.signal.tp}</li>
+                        <li class="pt-1"><span class="${signalTextClass}">AI_CONFIDENCE:</span> ${tradeData.signal.confidence}</li>
+                    </ul>
+                `;
+
+                // Update Macro
+                document.getElementById('ai-macro-report').innerHTML = `
+                    <div class="bg-cyan-950/30 p-3 border border-cyan-900/50">
+                        <h3 class="font-bold text-cyan-300 text-xs uppercase mb-1 tracking-widest">// DXY & YIELDS</h3>
+                        <p>${tradeData.macro.dxy}</p>
+                    </div>
+                    <div class="bg-cyan-950/30 p-3 border border-cyan-900/50">
+                        <h3 class="font-bold text-cyan-300 text-xs uppercase mb-1 tracking-widest">// GEOPOLITICS_&_LIQUIDITY</h3>
+                        <p>${tradeData.macro.geopolitics}</p>
+                    </div>
+                `;
+
+                // Update History
+                let historyHtml = "";
+                tradeData.history.forEach(row => {
+                    let rowClass = "wait-row";
+                    let stateBadge = '<span class="bg-yellow-500/20 text-yellow-400 border border-yellow-500/50 px-2 py-1 text-xs">PENDING</span>';
+                    
+                    if (row.status === "WIN") {
+                        rowClass = "win-row";
+                        stateBadge = '<span class="bg-green-500/20 text-green-400 border border-green-500/50 px-2 py-1 text-xs">WIN</span>';
+                    } else if (row.status === "LOSS") {
+                        rowClass = "loss-row";
+                        stateBadge = '<span class="bg-red-500/20 text-red-400 border border-red-500/50 px-2 py-1 text-xs">LOSS</span>';
+                    }
+
+                    let typeColor = row.type.includes("BUY") ? "neon-text-green" : "neon-text-red";
+
+                    historyHtml += `
+                        <tr class="${rowClass} border-b border-cyan-900/30">
+                            <td class="p-3">${row.date}</td>
+                            <td class="p-3 font-bold ${typeColor}">${row.type}</td>
+                            <td class="p-3">${row.entry}</td>
+                            <td class="p-3">${row.tp}</td>
+                            <td class="p-3">${row.sl}</td>
+                            <td class="p-3">${stateBadge}</td>
+                            <td class="p-3 text-slate-500">${row.result}</td>
+                        </tr>
+                    `;
+                });
+                document.getElementById('trade-history-body').innerHTML = historyHtml;
+            }
+        });
+    </script>
 </body>
 </html>
