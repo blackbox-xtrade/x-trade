@@ -31,7 +31,6 @@
             position: relative;
         }
 
-        /* Cyberpunk corner accents */
         .glass-panel::before {
             content: ''; position: absolute; top: -1px; left: -1px; width: 10px; height: 10px; border-top: 2px solid #06b6d4; border-left: 2px solid #06b6d4;
         }
@@ -53,7 +52,6 @@
         .loss-row { background-color: rgba(239, 68, 68, 0.05); border-left: 3px solid #f87171; }
         .wait-row { background-color: rgba(234, 179, 8, 0.05); border-left: 3px solid #fde047; }
 
-        /* CRT Scanline Overlay */
         .scanlines {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0) 50%, rgba(0,0,0,0.25) 50%, rgba(0,0,0,0.25));
@@ -76,33 +74,32 @@
         </div>
     </header>
 
-    <!-- Stat Summary -->
+    <!-- Stat Summary (RESET TO ZERO) -->
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6 relative z-10">
         <div class="glass-panel neon-border-green p-4 rounded-none text-center">
             <p class="text-green-500/70 text-xs font-bold uppercase tracking-wider cyber-font">System Winrate</p>
-            <p class="text-3xl font-black neon-text-green mt-1" id="stat-winrate">78.5%</p>
+            <p class="text-3xl font-black text-slate-500 mt-1" id="stat-winrate">0.0%</p>
         </div>
         <div class="glass-panel neon-border-cyan p-4 rounded-none text-center">
             <p class="text-cyan-500/70 text-xs font-bold uppercase tracking-wider cyber-font">Total Executions</p>
-            <p class="text-3xl font-black neon-text-cyan mt-1" id="stat-trades">142</p>
+            <p class="text-3xl font-black text-slate-500 mt-1" id="stat-trades">0</p>
         </div>
         <div class="glass-panel neon-border-yellow p-4 rounded-none text-center">
             <p class="text-yellow-500/70 text-xs font-bold uppercase tracking-wider cyber-font">Net Pips Extracted</p>
-            <p class="text-3xl font-black neon-text-yellow mt-1" id="stat-pips">+4,250</p>
+            <p class="text-3xl font-black text-slate-500 mt-1" id="stat-pips">0</p>
         </div>
         <div class="glass-panel p-4 rounded-none text-center" style="border: 1px solid rgba(168, 85, 247, 0.5); box-shadow: 0 0 10px rgba(168,85,247,0.3), inset 0 0 10px rgba(168,85,247,0.1);">
             <p class="text-purple-400/70 text-xs font-bold uppercase tracking-wider cyber-font">Profit Factor</p>
-            <p class="text-3xl font-black text-purple-400 mt-1" style="text-shadow: 0 0 10px #c084fc;">2.4</p>
+            <p class="text-3xl font-black text-slate-500 mt-1">0.0</p>
         </div>
     </div>
 
     <div class="grid grid-cols-1 xl:grid-cols-3 gap-6 relative z-10">
         
-        <!-- Kolom Kiri: Chart TradingView -->
+        <!-- Chart -->
         <div class="xl:col-span-2 glass-panel p-1 rounded-none flex flex-col h-[550px]">
             <div class="bg-black h-full w-full relative">
                 <div class="absolute top-0 left-0 bg-cyan-900/50 text-cyan-400 px-3 py-1 text-xs cyber-font z-20 pointer-events-none">XAUUSD // TERMINAL_VIEW</div>
-                <!-- TradingView Widget BEGIN -->
                 <div class="tradingview-widget-container h-full w-full pt-6">
                 <div id="tradingview_xauusd" class="h-full"></div>
                 <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
@@ -128,9 +125,8 @@
             </div>
         </div>
 
-        <!-- Kolom Kanan: Sinyal & Sentiment -->
+        <!-- Sinyal & Sentiment -->
         <div class="space-y-6">
-            
             <div class="glass-panel neon-border-red p-5 rounded-none bg-black/60">
                 <h2 class="text-xl font-bold mb-3 neon-text-red">> OVERRIDE: ACTIVE_SETUP</h2>
                 <div id="ai-signal-box" class="p-4 border border-red-500/30 bg-red-950/20">
@@ -168,9 +164,9 @@
         </div>
     </div>
 
-    <!-- Trade Performance -->
+    <!-- Trade Performance (CLEARED) -->
     <div class="mt-6 glass-panel p-6 rounded-none relative z-10">
-        <h2 class="text-xl font-bold mb-4 neon-text-cyan">> EXECUTION_LOG</h2>
+        <h2 class="text-xl font-bold mb-4 neon-text-cyan">> EXECUTION_LOG // DAY 1</h2>
         <div class="overflow-x-auto">
             <table class="w-full text-left border-collapse text-sm text-cyan-100 min-w-[700px] font-mono">
                 <thead>
@@ -185,6 +181,7 @@
                     </tr>
                 </thead>
                 <tbody id="trade-history-body">
+                    <!-- Hanya sinyal perdana hari ini -->
                     <tr class="wait-row border-b border-cyan-900/30">
                         <td class="p-3">7 OCT 26</td>
                         <td class="p-3 font-bold neon-text-red">SELL</td>
@@ -194,38 +191,12 @@
                         <td class="p-3"><span class="bg-yellow-500/20 text-yellow-400 border border-yellow-500/50 px-2 py-1 text-xs">PENDING</span></td>
                         <td class="p-3 text-slate-500">_ _ _ _</td>
                     </tr>
-                    <tr class="win-row border-b border-cyan-900/30">
-                        <td class="p-3">6 OCT 26</td>
-                        <td class="p-3 font-bold neon-text-red">SELL</td>
-                        <td class="p-3">$4,168.50</td>
-                        <td class="p-3">$4,140.00</td>
-                        <td class="p-3">$4,185.00</td>
-                        <td class="p-3"><span class="bg-green-500/20 text-green-400 border border-green-500/50 px-2 py-1 text-xs">CLOSED</span></td>
-                        <td class="p-3 neon-text-green font-bold">+285 PIP</td>
-                    </tr>
-                    <tr class="win-row border-b border-cyan-900/30">
-                        <td class="p-3">5 OCT 26</td>
-                        <td class="p-3 font-bold neon-text-green">BUY</td>
-                        <td class="p-3">$4,120.00</td>
-                        <td class="p-3">$4,150.00</td>
-                        <td class="p-3">$4,105.00</td>
-                        <td class="p-3"><span class="bg-green-500/20 text-green-400 border border-green-500/50 px-2 py-1 text-xs">CLOSED</span></td>
-                        <td class="p-3 neon-text-green font-bold">+300 PIP</td>
-                    </tr>
-                    <tr class="loss-row border-b border-cyan-900/30">
-                        <td class="p-3">2 OCT 26</td>
-                        <td class="p-3 font-bold neon-text-green">BUY</td>
-                        <td class="p-3">$4,195.00</td>
-                        <td class="p-3">$4,220.00</td>
-                        <td class="p-3">$4,180.00</td>
-                        <td class="p-3"><span class="bg-red-500/20 text-red-400 border border-red-500/50 px-2 py-1 text-xs">CLOSED</span></td>
-                        <td class="p-3 neon-text-red font-bold">-150 PIP</td>
-                    </tr>
                 </tbody>
             </table>
         </div>
     </div>
 
+    <!-- Macro Datastream -->
     <div class="grid grid-cols-1 xl:grid-cols-2 gap-6 mt-6 relative z-10">
         
         <div class="glass-panel p-6 rounded-none border-l-4 border-l-cyan-500">
@@ -264,7 +235,7 @@
     </div>
 
     <footer class="mt-12 text-center text-cyan-700 text-xs pb-8 cyber-font tracking-widest relative z-10">
-        SYSTEM_VER: 2026.1 // BLACKBOX NEURAL NETWORK // UNAUTHORIZED ACCESS PROHIBITED
+        SYSTEM_VER: DAY 1 // BLACKBOX NEURAL NETWORK // UNAUTHORIZED ACCESS PROHIBITED
     </footer>
 
 </body>
