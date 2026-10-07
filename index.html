@@ -8,29 +8,50 @@
     <style>
         body { background-color: #0f172a; color: #f8fafc; }
         .glass-panel { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); }
+        .win-row { background-color: rgba(34, 197, 94, 0.1); border-left: 4px solid #22c55e; }
+        .loss-row { background-color: rgba(239, 68, 68, 0.1); border-left: 4px solid #ef4444; }
+        .wait-row { background-color: rgba(234, 179, 8, 0.1); border-left: 4px solid #eab308; }
     </style>
 </head>
 <body class="min-h-screen p-4 md:p-8">
 
-    <header class="mb-8 border-b border-slate-700 pb-4 flex justify-between items-end">
+    <header class="mb-8 border-b border-slate-700 pb-4 flex flex-col md:flex-row md:justify-between md:items-end">
         <div>
             <h1 class="text-3xl font-bold text-yellow-500 flex items-center gap-3">
                 ⬛ Blackbox X-Trade
             </h1>
             <p class="text-slate-400 mt-2">Automated XAUUSD Analysis, Orderbook & Geopolitics Dashboard</p>
         </div>
-        <div class="text-right text-xs text-slate-500">
-            <!-- Waktu Update AI akan disuntikkan ke sini -->
+        <div class="text-left md:text-right mt-4 md:mt-0 text-xs text-slate-500">
             Last AI Update: <span class="text-green-400" id="ai-update-time">7 Oktober 2026</span>
         </div>
     </header>
 
+    <!-- NEW SECTION: Stat Summary / Winrate -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+        <div class="glass-panel p-4 rounded-xl shadow text-center border-b-4 border-green-500">
+            <p class="text-slate-400 text-sm font-semibold">Overall Winrate</p>
+            <p class="text-3xl font-bold text-green-400 mt-1" id="stat-winrate">78.5%</p>
+        </div>
+        <div class="glass-panel p-4 rounded-xl shadow text-center border-b-4 border-slate-500">
+            <p class="text-slate-400 text-sm font-semibold">Total Trades</p>
+            <p class="text-3xl font-bold text-slate-100 mt-1" id="stat-trades">142</p>
+        </div>
+        <div class="glass-panel p-4 rounded-xl shadow text-center border-b-4 border-yellow-500">
+            <p class="text-slate-400 text-sm font-semibold">Pips Gained</p>
+            <p class="text-3xl font-bold text-yellow-400 mt-1" id="stat-pips">+4,250</p>
+        </div>
+        <div class="glass-panel p-4 rounded-xl shadow text-center border-b-4 border-blue-500">
+            <p class="text-slate-400 text-sm font-semibold">Profit Factor</p>
+            <p class="text-3xl font-bold text-blue-400 mt-1" id="stat-pf">2.4</p>
+        </div>
+    </div>
+
     <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
         
         <!-- Kolom Kiri: Chart TradingView -->
-        <div class="xl:col-span-2 glass-panel p-4 rounded-xl shadow-lg flex flex-col h-[600px]">
+        <div class="xl:col-span-2 glass-panel p-4 rounded-xl shadow-lg flex flex-col h-[550px]">
             <h2 class="text-xl font-semibold mb-4 text-slate-200">📊 Live Chart XAUUSD</h2>
-            <!-- TradingView Widget BEGIN -->
             <div class="tradingview-widget-container flex-grow w-full">
               <div id="tradingview_xauusd" class="h-full"></div>
               <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
@@ -53,31 +74,26 @@
             });
               </script>
             </div>
-            <!-- TradingView Widget END -->
         </div>
 
-        <!-- Kolom Kanan: Sinyal, Sentiment, dan Calendar -->
+        <!-- Kolom Kanan: Sinyal & Sentiment -->
         <div class="space-y-6">
             
-            <!-- AI Signal Box -->
             <div class="glass-panel p-5 rounded-xl shadow-lg">
                 <h2 class="text-xl font-semibold mb-3 text-slate-200">⚡ AI Trade Setup</h2>
-                <!-- AI akan merubah bagian ini saat cron job berjalan -->
                 <div id="ai-signal-box" class="bg-red-500/10 border border-red-500/50 p-4 rounded-lg">
                     <h3 class="text-red-400 font-bold text-lg mb-2">🔴 SELL LIMIT</h3>
                     <ul class="text-slate-300 space-y-2 text-sm">
                         <li><span class="font-semibold text-slate-100">Entry Zone:</span> $4,145 - $4,152</li>
                         <li><span class="font-semibold text-slate-100">Stop Loss:</span> $4,165</li>
                         <li><span class="font-semibold text-slate-100">Take Profit:</span> $4,110</li>
-                        <li><span class="font-semibold text-slate-100">Status:</span> <span class="bg-yellow-500/20 text-yellow-300 px-2 py-0.5 rounded text-xs ml-2">WAITING</span></li>
+                        <li><span class="font-semibold text-slate-100">Confidence:</span> 9/10</li>
                     </ul>
                 </div>
             </div>
 
-            <!-- Realtime Technical Sentiment Widget -->
-            <div class="glass-panel p-5 rounded-xl shadow-lg h-[400px] overflow-hidden">
+            <div class="glass-panel p-5 rounded-xl shadow-lg h-[330px] overflow-hidden">
                 <h2 class="text-xl font-semibold mb-3 text-slate-200">🧭 Live Technical Sentiment</h2>
-                <!-- TradingView Technicals Widget BEGIN -->
                 <div class="tradingview-widget-container">
                   <div class="tradingview-widget-container__widget"></div>
                   <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-technical-analysis.js" async>
@@ -94,18 +110,83 @@
                 }
                   </script>
                 </div>
-                <!-- TradingView Technicals Widget END -->
             </div>
+        </div>
+    </div>
+
+    <!-- NEW SECTION: Signal History & Trade Performance -->
+    <div class="mt-6 glass-panel p-6 rounded-xl shadow-lg overflow-hidden">
+        <h2 class="text-xl font-semibold mb-4 text-slate-200">🧾 Signal History & Trade Performance</h2>
+        <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse text-sm text-slate-300 min-w-[700px]">
+                <thead>
+                    <tr class="border-b border-slate-700 text-slate-400">
+                        <th class="p-3 font-semibold">Tanggal</th>
+                        <th class="p-3 font-semibold">Tipe</th>
+                        <th class="p-3 font-semibold">Entry Level</th>
+                        <th class="p-3 font-semibold">Target (TP)</th>
+                        <th class="p-3 font-semibold">Stop (SL)</th>
+                        <th class="p-3 font-semibold">Status</th>
+                        <th class="p-3 font-semibold">Result</th>
+                    </tr>
+                </thead>
+                <tbody id="trade-history-body">
+                    <!-- Data dummy, nantinya diupdate otomatis oleh AI Cron -->
+                    <tr class="wait-row border-b border-slate-800/50">
+                        <td class="p-3">7 Oct 2026</td>
+                        <td class="p-3 font-bold text-red-400">SELL</td>
+                        <td class="p-3">$4,150.00</td>
+                        <td class="p-3">$4,110.00</td>
+                        <td class="p-3">$4,165.00</td>
+                        <td class="p-3"><span class="bg-yellow-500/20 text-yellow-300 px-2 py-1 rounded text-xs font-semibold">PENDING</span></td>
+                        <td class="p-3 text-slate-500">-</td>
+                    </tr>
+                    <tr class="win-row border-b border-slate-800/50">
+                        <td class="p-3">6 Oct 2026</td>
+                        <td class="p-3 font-bold text-red-400">SELL</td>
+                        <td class="p-3">$4,168.50</td>
+                        <td class="p-3">$4,140.00</td>
+                        <td class="p-3">$4,185.00</td>
+                        <td class="p-3"><span class="bg-green-500/20 text-green-400 px-2 py-1 rounded text-xs font-semibold">WIN</span></td>
+                        <td class="p-3 text-green-400 font-bold">+285 Pips</td>
+                    </tr>
+                    <tr class="win-row border-b border-slate-800/50">
+                        <td class="p-3">5 Oct 2026</td>
+                        <td class="p-3 font-bold text-green-400">BUY</td>
+                        <td class="p-3">$4,120.00</td>
+                        <td class="p-3">$4,150.00</td>
+                        <td class="p-3">$4,105.00</td>
+                        <td class="p-3"><span class="bg-green-500/20 text-green-400 px-2 py-1 rounded text-xs font-semibold">WIN</span></td>
+                        <td class="p-3 text-green-400 font-bold">+300 Pips</td>
+                    </tr>
+                    <tr class="loss-row border-b border-slate-800/50">
+                        <td class="p-3">2 Oct 2026</td>
+                        <td class="p-3 font-bold text-green-400">BUY</td>
+                        <td class="p-3">$4,195.00</td>
+                        <td class="p-3">$4,220.00</td>
+                        <td class="p-3">$4,180.00</td>
+                        <td class="p-3"><span class="bg-red-500/20 text-red-400 px-2 py-1 rounded text-xs font-semibold">LOSS</span></td>
+                        <td class="p-3 text-red-400 font-bold">-150 Pips</td>
+                    </tr>
+                    <tr class="win-row border-b border-slate-800/50">
+                        <td class="p-3">1 Oct 2026</td>
+                        <td class="p-3 font-bold text-red-400">SELL</td>
+                        <td class="p-3">$4,210.00</td>
+                        <td class="p-3">$4,180.00</td>
+                        <td class="p-3">$4,225.00</td>
+                        <td class="p-3"><span class="bg-green-500/20 text-green-400 px-2 py-1 rounded text-xs font-semibold">WIN</span></td>
+                        <td class="p-3 text-green-400 font-bold">+300 Pips</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 
     <!-- Bagian Fundamental & News -->
     <div class="grid grid-cols-1 xl:grid-cols-2 gap-6 mt-6">
         
-        <!-- AI Detail Report -->
         <div class="glass-panel p-6 rounded-xl shadow-lg">
             <h2 class="text-xl font-semibold mb-4 text-slate-200">📝 AI Detailed Macro Report</h2>
-            <!-- AI akan merubah teks ini saat cron job berjalan -->
             <div id="ai-macro-report" class="space-y-4 text-slate-300 text-sm leading-relaxed">
                 <div>
                     <h3 class="font-bold text-slate-100 text-base mb-1">💵 DXY & US Yields</h3>
@@ -113,15 +194,13 @@
                 </div>
                 <div>
                     <h3 class="font-bold text-slate-100 text-base mb-1">🌍 Geopolitics & Orderbook</h3>
-                    <p>Ketegangan Timur Tengah memicu reli harga minyak, yang berpotensi mengangkat inflasi dan menahan suku bunga Fed. Secara orderbook, retail terjebak di posisi LONG (74%), memberikan ruang bagi institusi untuk melakukan <i>Stop Loss Sweep</i> ke arah bawah.</p>
+                    <p>Ketegangan memicu reli harga minyak, berpotensi mengangkat inflasi dan menahan suku bunga Fed. Secara orderbook, retail terjebak di posisi LONG, memberikan ruang bagi institusi untuk menekan turun harga dan mencari Stop Loss.</p>
                 </div>
             </div>
         </div>
 
-        <!-- Realtime Economic Calendar -->
         <div class="glass-panel p-6 rounded-xl shadow-lg h-[400px]">
-            <h2 class="text-xl font-semibold mb-4 text-slate-200">📅 Live Economic Calendar & News</h2>
-            <!-- TradingView Events Widget BEGIN -->
+            <h2 class="text-xl font-semibold mb-4 text-slate-200">📅 Live Economic Calendar</h2>
             <div class="tradingview-widget-container h-full w-full">
               <div class="tradingview-widget-container__widget"></div>
               <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-events.js" async>
@@ -136,9 +215,7 @@
             }
               </script>
             </div>
-            <!-- TradingView Events Widget END -->
         </div>
-
     </div>
 
     <footer class="mt-12 text-center text-slate-500 text-sm pb-8">
