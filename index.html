@@ -130,7 +130,13 @@
             <div class="glass-panel neon-border-red p-5 rounded-none bg-black/60">
                 <h2 class="text-xl font-bold mb-3 neon-text-red">> OVERRIDE: ACTIVE_SETUP</h2>
                 <div id="ai-signal-box" class="p-4 border border-red-500/30 bg-red-950/20">
-                    <!-- Dynamic Signal Content Here -->
+                    <h3 class="neon-text-red font-black text-2xl mb-2">SELL LIMIT</h3>
+                    <ul class="text-gray-200 space-y-2 text-sm cyber-font">
+                        <li class="border-b border-red-900/50 pb-1"><span class="text-red-400">TARGET_ZONE:</span> $4,204.00</li>
+                        <li class="border-b border-red-900/50 pb-1"><span class="text-red-400">STOP_LOSS:</span> $4,216.00</li>
+                        <li class="border-b border-red-900/50 pb-1"><span class="text-red-400">TAKE_PROFIT:</span> $4,150.00</li>
+                        <li class="pt-1"><span class="text-red-400">AI_CONFIDENCE:</span> 8.5/10</li>
+                    </ul>
                 </div>
             </div>
 
@@ -175,7 +181,33 @@
                     </tr>
                 </thead>
                 <tbody id="trade-history-body">
-                    <!-- Dynamic History rows -->
+                    <tr class="wait-row border-b border-cyan-900/30">
+                        <td class="p-3">12 OCT 26</td>
+                        <td class="p-3 font-bold neon-text-red">SELL</td>
+                        <td class="p-3">$4,204.00</td>
+                        <td class="p-3">$4,150.00</td>
+                        <td class="p-3">$4,216.00</td>
+                        <td class="p-3"><span class="bg-yellow-500/20 text-yellow-400 border border-yellow-500/50 px-2 py-1 text-xs">PENDING</span></td>
+                        <td class="p-3 text-slate-500">_ _ _ _</td>
+                    </tr>
+                    <tr class="wait-row border-b border-cyan-900/30">
+                        <td class="p-3">08 OCT 26</td>
+                        <td class="p-3 font-bold neon-text-red">SELL</td>
+                        <td class="p-3">$4,127.00</td>
+                        <td class="p-3">$4,115.00</td>
+                        <td class="p-3">$4,137.00</td>
+                        <td class="p-3"><span class="bg-yellow-500/20 text-yellow-400 border border-yellow-500/50 px-2 py-1 text-xs">PENDING</span></td>
+                        <td class="p-3 text-slate-500">_ _ _ _</td>
+                    </tr>
+                    <tr class="wait-row border-b border-cyan-900/30">
+                        <td class="p-3">7 OCT 26</td>
+                        <td class="p-3 font-bold neon-text-red">SELL</td>
+                        <td class="p-3">$4,150.00</td>
+                        <td class="p-3">$4,110.00</td>
+                        <td class="p-3">$4,165.00</td>
+                        <td class="p-3"><span class="bg-yellow-500/20 text-yellow-400 border border-yellow-500/50 px-2 py-1 text-xs">PENDING</span></td>
+                        <td class="p-3 text-slate-500">_ _ _ _</td>
+                    </tr>
                 </tbody>
             </table>
         </div>
@@ -187,7 +219,14 @@
         <div class="glass-panel p-6 rounded-none border-l-4 border-l-cyan-500">
             <h2 class="text-xl font-bold mb-4 neon-text-cyan">> MACRO_DATASTREAM</h2>
             <div id="ai-macro-report" class="space-y-4 text-cyan-100 text-sm leading-relaxed font-mono">
-                <!-- Dynamic Macro Content -->
+                <div class="bg-cyan-950/30 p-3 border border-cyan-900/50">
+                    <h3 class="font-bold text-cyan-300 text-xs uppercase mb-1 tracking-widest">// DXY &amp; YIELDS</h3>
+                    <p>DXY bertahan di 102.20 &amp; Yield US 10Y di 5.24%. Sentimen suku bunga tinggi membatasi akselerasi rally emas.</p>
+                </div>
+                <div class="bg-cyan-950/30 p-3 border border-cyan-900/50">
+                    <h3 class="font-bold text-cyan-300 text-xs uppercase mb-1 tracking-widest">// GEOPOLITICS_&amp;_LIQUIDITY</h3>
+                    <p>Retail bias 73% Long di OANDA. Smart Money mengincar liquidity sweep buy stops di atas barrier psikologis $4,200.</p>
+                </div>
             </div>
         </div>
 
@@ -218,6 +257,57 @@
 
     <script src="data.js?v=20261012"></script>
     <script>
+        // Fallback in case external script is blocked or cached
+        if (typeof tradeData === 'undefined') {
+            window.tradeData = {
+                "last_update": "12 OCT 2026",
+                "winrate": "0.0%",
+                "total_trades": "0",
+                "pips_gained": "0",
+                "profit_factor": "0.0",
+                "signal": {
+                    "type": "SELL LIMIT",
+                    "entry": "$4,204.00",
+                    "sl": "$4,216.00",
+                    "tp": "$4,150.00",
+                    "confidence": "8.5/10"
+                },
+                "macro": {
+                    "dxy": "DXY bertahan di 102.20 & Yield US 10Y di 5.24%. Sentimen suku bunga tinggi membatasi akselerasi rally emas.",
+                    "geopolitics": "Retail bias 73% Long di OANDA. Smart Money mengincar liquidity sweep buy stops di atas barrier psikologis $4,200."
+                },
+                "history": [
+                    {
+                        "date": "12 OCT 26",
+                        "type": "SELL",
+                        "entry": "$4,204.00",
+                        "tp": "$4,150.00",
+                        "sl": "$4,216.00",
+                        "status": "PENDING",
+                        "result": "_ _ _ _"
+                    },
+                    {
+                        "date": "08 OCT 26",
+                        "type": "SELL",
+                        "entry": "$4,127.00",
+                        "tp": "$4,115.00",
+                        "sl": "$4,137.00",
+                        "status": "PENDING",
+                        "result": "_ _ _ _"
+                    },
+                    {
+                        "date": "7 OCT 26",
+                        "type": "SELL",
+                        "entry": "$4,150.00",
+                        "tp": "$4,110.00",
+                        "sl": "$4,165.00",
+                        "status": "PENDING",
+                        "result": "_ _ _ _"
+                    }
+                ]
+            };
+        }
+
         document.addEventListener("DOMContentLoaded", () => {
             if (typeof tradeData !== 'undefined') {
                 document.getElementById('ai-update-time').innerText = tradeData.last_update + " // ONLINE";
