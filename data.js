@@ -1,28 +1,37 @@
 // data.js
 const tradeData = {
-    "last_update": "12 OCT 2026",
+    "last_update": "13 OCT 2026",
     "winrate": "0.0%",
     "total_trades": "0",
     "pips_gained": "0",
     "profit_factor": "0.0",
     "signal": {
         "type": "SELL LIMIT",
-        "entry": "$4,204.00",
-        "sl": "$4,216.00",
-        "tp": "$4,150.00",
+        "entry": "$4,216.50",
+        "sl": "$4,228.00",
+        "tp": "$4,178.00",
         "confidence": "8.5/10"
     },
     "macro": {
-        "dxy": "DXY bertahan di 102.20 & Yield US 10Y di 5.24%. Sentimen suku bunga tinggi membatasi akselerasi rally emas.",
-        "geopolitics": "Retail bias 73% Long di OANDA. Smart Money mengincar liquidity sweep buy stops di atas barrier psikologis $4,200."
+        "dxy": "DXY kokoh di 102.57 & Yield US 10Y stabil di 5.24%. Suku bunga elevasi menekan aset non-yielding emas.",
+        "geopolitics": "Retail sentiment 74% Long di OANDA/IG. Smart Money bersiap sweep liquidity buyer ritel menuju target $4,178."
     },
     "history": [
         {
+            "date": "13 OCT 26",
+            "type": "SELL",
+            "entry": "$4,216.50",
+            "tp": "$4,178.00",
+            "sl": "$4,228.00",
+            "status": "PENDING",
+            "result": "_ _ _ _"
+        },
+        {
             "date": "12 OCT 26",
             "type": "SELL",
-            "entry": "$4,204.00",
-            "tp": "$4,150.00",
-            "sl": "$4,216.00",
+            "entry": "$4,181.50",
+            "tp": "$4,146.00",
+            "sl": "$4,192.00",
             "status": "PENDING",
             "result": "_ _ _ _"
         },

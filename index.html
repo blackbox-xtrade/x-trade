@@ -70,7 +70,7 @@
             <p class="text-cyan-400 mt-2 cyber-font text-sm uppercase tracking-widest">> Automated Neural Analysis & Orderbook Interface_</p>
         </div>
         <div class="text-left md:text-right mt-4 md:mt-0 text-xs text-cyan-600 cyber-font tracking-wider">
-            LAST_SYNC: <span class="neon-text-green" id="ai-update-time">12 OCT 2026 // ONLINE</span>
+            LAST_SYNC: <span class="neon-text-green" id="ai-update-time">13 OCT 2026 // ONLINE</span>
         </div>
     </header>
 
@@ -132,9 +132,9 @@
                 <div id="ai-signal-box" class="p-4 border border-red-500/30 bg-red-950/20">
                     <h3 class="neon-text-red font-black text-2xl mb-2">SELL LIMIT</h3>
                     <ul class="text-gray-200 space-y-2 text-sm cyber-font">
-                        <li class="border-b border-red-900/50 pb-1"><span class="text-red-400">TARGET_ZONE:</span> $4,204.00</li>
-                        <li class="border-b border-red-900/50 pb-1"><span class="text-red-400">STOP_LOSS:</span> $4,216.00</li>
-                        <li class="border-b border-red-900/50 pb-1"><span class="text-red-400">TAKE_PROFIT:</span> $4,150.00</li>
+                        <li class="border-b border-red-900/50 pb-1"><span class="text-red-400">TARGET_ZONE:</span> $4,216.50</li>
+                        <li class="border-b border-red-900/50 pb-1"><span class="text-red-400">STOP_LOSS:</span> $4,228.00</li>
+                        <li class="border-b border-red-900/50 pb-1"><span class="text-red-400">TAKE_PROFIT:</span> $4,178.00</li>
                         <li class="pt-1"><span class="text-red-400">AI_CONFIDENCE:</span> 8.5/10</li>
                     </ul>
                 </div>
@@ -182,11 +182,20 @@
                 </thead>
                 <tbody id="trade-history-body">
                     <tr class="wait-row border-b border-cyan-900/30">
+                        <td class="p-3">13 OCT 26</td>
+                        <td class="p-3 font-bold neon-text-red">SELL</td>
+                        <td class="p-3">$4,216.50</td>
+                        <td class="p-3">$4,178.00</td>
+                        <td class="p-3">$4,228.00</td>
+                        <td class="p-3"><span class="bg-yellow-500/20 text-yellow-400 border border-yellow-500/50 px-2 py-1 text-xs">PENDING</span></td>
+                        <td class="p-3 text-slate-500">_ _ _ _</td>
+                    </tr>
+                    <tr class="wait-row border-b border-cyan-900/30">
                         <td class="p-3">12 OCT 26</td>
                         <td class="p-3 font-bold neon-text-red">SELL</td>
-                        <td class="p-3">$4,204.00</td>
-                        <td class="p-3">$4,150.00</td>
-                        <td class="p-3">$4,216.00</td>
+                        <td class="p-3">$4,181.50</td>
+                        <td class="p-3">$4,146.00</td>
+                        <td class="p-3">$4,192.00</td>
                         <td class="p-3"><span class="bg-yellow-500/20 text-yellow-400 border border-yellow-500/50 px-2 py-1 text-xs">PENDING</span></td>
                         <td class="p-3 text-slate-500">_ _ _ _</td>
                     </tr>
@@ -221,11 +230,11 @@
             <div id="ai-macro-report" class="space-y-4 text-cyan-100 text-sm leading-relaxed font-mono">
                 <div class="bg-cyan-950/30 p-3 border border-cyan-900/50">
                     <h3 class="font-bold text-cyan-300 text-xs uppercase mb-1 tracking-widest">// DXY &amp; YIELDS</h3>
-                    <p>DXY bertahan di 102.20 &amp; Yield US 10Y di 5.24%. Sentimen suku bunga tinggi membatasi akselerasi rally emas.</p>
+                    <p>DXY kokoh di 102.57 &amp; Yield US 10Y stabil di 5.24%. Suku bunga elevasi menekan aset non-yielding emas.</p>
                 </div>
                 <div class="bg-cyan-950/30 p-3 border border-cyan-900/50">
                     <h3 class="font-bold text-cyan-300 text-xs uppercase mb-1 tracking-widest">// GEOPOLITICS_&amp;_LIQUIDITY</h3>
-                    <p>Retail bias 73% Long di OANDA. Smart Money mengincar liquidity sweep buy stops di atas barrier psikologis $4,200.</p>
+                    <p>Retail sentiment 74% Long di OANDA/IG. Smart Money bersiap sweep liquidity buyer ritel menuju target $4,178.</p>
                 </div>
             </div>
         </div>
@@ -255,34 +264,43 @@
         SYSTEM_VER: <span id="system-ver">DAY 1</span> // BLACKBOX NEURAL NETWORK // UNAUTHORIZED ACCESS PROHIBITED
     </footer>
 
-    <script src="data.js?v=20261012"></script>
+    <script src="data.js?v=20261013"></script>
     <script>
         // Fallback in case external script is blocked or cached
         if (typeof tradeData === 'undefined') {
             window.tradeData = {
-                "last_update": "12 OCT 2026",
+                "last_update": "13 OCT 2026",
                 "winrate": "0.0%",
                 "total_trades": "0",
                 "pips_gained": "0",
                 "profit_factor": "0.0",
                 "signal": {
                     "type": "SELL LIMIT",
-                    "entry": "$4,204.00",
-                    "sl": "$4,216.00",
-                    "tp": "$4,150.00",
+                    "entry": "$4,216.50",
+                    "sl": "$4,228.00",
+                    "tp": "$4,178.00",
                     "confidence": "8.5/10"
                 },
                 "macro": {
-                    "dxy": "DXY bertahan di 102.20 & Yield US 10Y di 5.24%. Sentimen suku bunga tinggi membatasi akselerasi rally emas.",
-                    "geopolitics": "Retail bias 73% Long di OANDA. Smart Money mengincar liquidity sweep buy stops di atas barrier psikologis $4,200."
+                    "dxy": "DXY kokoh di 102.57 & Yield US 10Y stabil di 5.24%. Suku bunga elevasi menekan aset non-yielding emas.",
+                    "geopolitics": "Retail sentiment 74% Long di OANDA/IG. Smart Money bersiap sweep liquidity buyer ritel menuju target $4,178."
                 },
                 "history": [
                     {
+                        "date": "13 OCT 26",
+                        "type": "SELL",
+                        "entry": "$4,216.50",
+                        "tp": "$4,178.00",
+                        "sl": "$4,228.00",
+                        "status": "PENDING",
+                        "result": "_ _ _ _"
+                    },
+                    {
                         "date": "12 OCT 26",
                         "type": "SELL",
-                        "entry": "$4,204.00",
-                        "tp": "$4,150.00",
-                        "sl": "$4,216.00",
+                        "entry": "$4,181.50",
+                        "tp": "$4,146.00",
+                        "sl": "$4,192.00",
                         "status": "PENDING",
                         "result": "_ _ _ _"
                     },
