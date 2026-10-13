@@ -70,16 +70,55 @@
 </head>
 <body class="min-h-screen p-4 md:p-8">
     <div class="scanlines"></div>
+    <!-- Share Intel Modal -->
+    <div id="share-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="glass-panel max-w-md w-full p-6 border border-cyan-500 rounded-none relative">
+            <div class="flex items-center justify-between pb-3 border-b border-cyan-800/80 mb-4">
+                <h3 class="text-lg font-black neon-text-yellow flex items-center gap-2">
+                    <span>//</span> SHARE INTEL DOSSIER
+                </h3>
+                <button onclick="closeShareModal()" class="text-cyan-400 hover:text-red-400 text-lg font-bold font-mono cursor-pointer">✕</button>
+            </div>
+            <p class="text-xs text-cyan-200/90 font-mono mb-4 leading-relaxed">
+                Bagikan live sinyal &amp; analisa komprehensif XAUUSD langsung ke komunitas trader Anda:
+            </p>
+            <div class="grid grid-cols-2 gap-3 font-mono text-xs mb-4">
+                <a id="share-wa-btn" href="#" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-green-950/40 border border-green-500/60 hover:bg-green-900/40 text-green-300 hover:text-white transition-all">
+                    <span>💬</span> WhatsApp
+                </a>
+                <a id="share-tg-btn" href="#" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-sky-950/40 border border-sky-500/60 hover:bg-sky-900/40 text-sky-300 hover:text-white transition-all">
+                    <span>✈️</span> Telegram
+                </a>
+                <a id="share-x-btn" href="#" target="_blank" class="flex items-center justify-center gap-2 p-2.5 bg-slate-950 border border-slate-600 hover:border-cyan-400 text-slate-200 hover:text-cyan-300 transition-all">
+                    <span>✖</span> X (Twitter)
+                </a>
+                <button onclick="copyShareLink()" class="flex items-center justify-center gap-2 p-2.5 bg-cyan-950/40 border border-cyan-500/60 hover:bg-cyan-900/40 text-cyan-300 hover:text-yellow-400 transition-all cursor-pointer">
+                    <span>📋</span> <span id="copy-btn-text">Salin Link</span>
+                </button>
+            </div>
+            <div class="bg-black/60 p-2.5 border border-cyan-900/70 text-[11px] font-mono text-cyan-400/80 break-all flex items-center justify-between gap-2">
+                <span id="share-url-preview">https://x-trade-sys.vercel.app</span>
+                <span class="text-[10px] text-yellow-400 uppercase font-bold shrink-0">PUBLIC LINK</span>
+            </div>
+        </div>
+    </div>
 
-    <header class="mb-8 border-b border-cyan-800 pb-4 flex flex-col md:flex-row md:justify-between md:items-end relative z-10">
+
+    <header class="mb-8 border-b border-cyan-800 pb-4 flex flex-col md:flex-row md:justify-between md:items-end relative z-10 gap-4">
         <div>
             <h1 class="text-4xl font-black neon-text-yellow flex items-center gap-3">
                 [X]-TRADE_SYS
             </h1>
-            <p class="text-cyan-400 mt-2 cyber-font text-sm uppercase tracking-widest">> Automated Neural Analysis & Orderbook Interface_</p>
+            <p class="text-cyan-400 mt-2 cyber-font text-sm uppercase tracking-widest">> Automated Neural Analysis &amp; Orderbook Interface_</p>
         </div>
-        <div class="text-left md:text-right mt-4 md:mt-0 text-xs text-cyan-600 cyber-font tracking-wider">
-            LAST_SYNC: <span class="neon-text-green" id="ai-update-time">13 OCT 2026 // ONLINE</span>
+        <div class="flex flex-wrap items-center gap-3">
+            <button onclick="openShareModal()" class="bg-cyan-950/80 hover:bg-cyan-900 border border-cyan-400/80 hover:border-yellow-400 text-cyan-300 hover:text-yellow-400 px-3 py-1.5 text-xs cyber-font font-bold tracking-wider transition-all flex items-center gap-1.5 cursor-pointer shadow-[0_0_10px_rgba(6,182,212,0.3)]">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/></svg>
+                <span>SHARE INTEL</span>
+            </button>
+            <div class="text-left md:text-right text-xs text-cyan-600 cyber-font tracking-wider">
+                LAST_SYNC: <span class="neon-text-green" id="ai-update-time">13 OCT 2026 // ONLINE</span>
+            </div>
         </div>
     </header>
 
@@ -344,6 +383,69 @@
             </div>
         </div>
     </section>
+
+    
+    <!-- ======================================================== -->
+    <!-- GEOPOLITICAL WAR RADAR & X (TWITTER) BREAKING FEED       -->
+    <!-- ======================================================== -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-8 relative z-10">
+        
+        <!-- Panel 1: Geopolitical War Radar -->
+        <div class="glass-panel p-6 rounded-none border border-red-500/50">
+            <div class="flex items-center justify-between pb-3 border-b border-red-900/60 mb-4">
+                <div>
+                    <h3 class="text-xl font-black neon-text-red flex items-center gap-2">
+                        <span>⚠️</span> GEOPOLITICAL WAR RADAR
+                    </h3>
+                    <p class="text-xs text-red-300/80 cyber-font tracking-wider mt-0.5">Middle East Escalation &amp; Energy Transmission to Gold</p>
+                </div>
+                <span class="bg-red-950 border border-red-500/60 text-red-400 text-xs px-2.5 py-1 font-mono uppercase font-bold">
+                    DEFCON 2 // ESCALATION
+                </span>
+            </div>
+
+            <!-- Crude Oil & Inflation Channel Alert -->
+            <div class="bg-black/70 border border-red-900/50 p-3.5 mb-4 font-mono text-xs">
+                <div class="flex flex-wrap items-center justify-between text-xs mb-2 gap-2">
+                    <span class="text-cyan-300 font-bold flex items-center gap-1.5">
+                        <span>🛢️</span> BRENT CRUDE OIL: <strong class="neon-text-yellow text-sm">$106.40 / bbl (+3.85%)</strong>
+                    </span>
+                    <span class="px-2 py-0.5 bg-red-900/40 border border-red-500/50 text-red-300 text-[10px] uppercase font-bold">
+                        INFLATION TRANSMISSION CHANNEL
+                    </span>
+                </div>
+                <p class="text-gray-300 leading-relaxed text-[11px]">
+                    <strong>Mekanisme Tekanan Emas:</strong> Perang Timur Tengah memicu kenaikan harga minyak, yang mentransmisikan kekhawatiran <em>sticky inflation</em>. The Fed dipaksa mempertahankan suku bunga tinggi (5.25%-5.50%) lebih lama, menjaga Yield 10Y di 5.24% dan memicu <em>liquidity drain</em> ke US Dollar kas, menekan emas dalam jangka pendek meski perang berkecamuk.
+                </p>
+            </div>
+
+            <!-- War Hotspots List -->
+            <div id="war-hotspots-container" class="space-y-3 font-mono text-xs">
+                <!-- Dynamically rendered via renderWarIntel() -->
+            </div>
+        </div>
+
+        <!-- Panel 2: X (Twitter) Breaking Financial Radar -->
+        <div class="glass-panel p-6 rounded-none border border-cyan-500/50">
+            <div class="flex items-center justify-between pb-3 border-b border-cyan-800/80 mb-4">
+                <div>
+                    <h3 class="text-xl font-black neon-text-cyan flex items-center gap-2">
+                        <span>✖</span> X (TWITTER) BREAKING RADAR
+                    </h3>
+                    <p class="text-xs text-cyan-400 cyber-font tracking-wider mt-0.5">High-Impact Market Handles &amp; Real-Time XAU Sentiment Feed</p>
+                </div>
+                <span class="bg-cyan-950 border border-cyan-500/60 text-cyan-300 text-xs px-2.5 py-1 font-mono uppercase font-bold flex items-center gap-1">
+                    <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span> LIVE RADAR
+                </span>
+            </div>
+
+            <!-- Tweets Stream Container -->
+            <div id="x-tweets-container" class="space-y-3 font-mono text-xs max-h-[460px] overflow-y-auto pr-1">
+                <!-- Dynamically rendered via renderXRadar() -->
+            </div>
+        </div>
+
+    </div>
 
     <footer class="mt-12 text-center text-cyan-700 text-xs pb-8 cyber-font tracking-widest relative z-10">
         SYSTEM_VER: <span id="system-ver">DAY 1</span> // BLACKBOX NEURAL NETWORK // UNAUTHORIZED ACCESS PROHIBITED
@@ -824,8 +926,119 @@
             `;
         }
 
+        
+        // --- SHARE MODAL HANDLERS ---
+        function openShareModal() {
+            const modal = document.getElementById('share-modal');
+            if (modal) modal.classList.remove('hidden');
+
+            const shareUrl = window.location.href;
+            const currentPrice = window.tradeData && window.tradeData.full_report && window.tradeData.full_report.market_news 
+                ? window.tradeData.full_report.market_news.xauusd_current 
+                : "$4,162.10";
+            const signalType = window.tradeData && window.tradeData.signal 
+                ? window.tradeData.signal.type 
+                : "SELL";
+
+            const text = encodeURIComponent(`🔥 [X]-TRADE_SYS // XAUUSD Live Intelligence Dossier\nHarga: ${currentPrice} | Signal: ${signalType}\nCek analisa multi-timeframe, orderbook & skenario live di:\n`);
+            const encodedUrl = encodeURIComponent(shareUrl);
+
+            const waBtn = document.getElementById('share-wa-btn');
+            const tgBtn = document.getElementById('share-tg-btn');
+            const xBtn = document.getElementById('share-x-btn');
+            const preview = document.getElementById('share-url-preview');
+
+            if (waBtn) waBtn.href = `https://api.whatsapp.com/send?text=${text}${encodedUrl}`;
+            if (tgBtn) tgBtn.href = `https://t.me/share/url?url=${encodedUrl}&text=${text}`;
+            if (xBtn) xBtn.href = `https://x.com/intent/tweet?text=${text}&url=${encodedUrl}`;
+            if (preview) preview.innerText = shareUrl;
+
+            // Optional Web Share API for mobile devices
+            if (navigator.share && window.innerWidth < 768) {
+                navigator.share({
+                    title: '[X]-TRADE_SYS // XAUUSD Live Intelligence',
+                    text: `[X]-TRADE_SYS Live Gold Signal: ${signalType} at ${currentPrice}`,
+                    url: shareUrl
+                }).catch(() => {});
+            }
+        }
+
+        function closeShareModal() {
+            const modal = document.getElementById('share-modal');
+            if (modal) modal.classList.add('hidden');
+        }
+
+        function copyShareLink() {
+            const shareUrl = window.location.href;
+            navigator.clipboard.writeText(shareUrl).then(() => {
+                const btnText = document.getElementById('copy-btn-text');
+                if (btnText) {
+                    btnText.innerText = "Tersalin! ✓";
+                    setTimeout(() => { btnText.innerText = "Salin Link"; }, 2500);
+                }
+            }).catch(() => {
+                prompt("Salin link ini:", shareUrl);
+            });
+        }
+
+        // --- RENDER GEOPOLITICAL WAR RADAR ---
+        function renderWarIntel() {
+            if (!window.tradeData || !window.tradeData.war_intel) return;
+            const w = window.tradeData.war_intel;
+            const container = document.getElementById('war-hotspots-container');
+            if (!container || !w.hotspots) return;
+
+            container.innerHTML = w.hotspots.map(h => `
+                <div class="bg-black/60 border border-cyan-900/60 p-3">
+                    <div class="flex items-center justify-between mb-1.5 gap-2">
+                        <span class="text-cyan-300 font-bold">${h.title}</span>
+                        <span class="px-2 py-0.5 text-[10px] font-bold uppercase ${h.tag_color || 'border-cyan-500 text-cyan-300'} border">
+                            ${h.tag}
+                        </span>
+                    </div>
+                    <p class="text-cyan-100/90 text-[11px] leading-relaxed">${h.desc}</p>
+                </div>
+            `).join('');
+        }
+
+        // --- RENDER X (TWITTER) BREAKING RADAR ---
+        function renderXRadar() {
+            if (!window.tradeData || !window.tradeData.x_radar) return;
+            const tweets = window.tradeData.x_radar;
+            const container = document.getElementById('x-tweets-container');
+            if (!container) return;
+
+            container.innerHTML = tweets.map(t => `
+                <div class="bg-black/60 border border-cyan-900/60 p-3 hover:border-cyan-500/60 transition-colors">
+                    <div class="flex items-center justify-between mb-2">
+                        <div class="flex items-center gap-2">
+                            <a href="${t.url}" target="_blank" class="font-bold text-cyan-300 hover:text-yellow-400 flex items-center gap-1">
+                                <span>${t.name}</span>
+                                <span class="text-cyan-600 text-[11px] font-normal">${t.handle}</span>
+                            </a>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="text-[10px] text-slate-500">${t.time}</span>
+                            <span class="px-1.5 py-0.5 text-[10px] font-bold ${t.impact_badge || 'border border-cyan-500 text-cyan-300'}">
+                                ${t.impact}
+                            </span>
+                        </div>
+                    </div>
+                    <p class="text-cyan-100/90 text-xs leading-relaxed mb-2">${t.tweet}</p>
+                    <div class="flex items-center justify-between text-[10px] text-cyan-500/80 pt-1 border-t border-cyan-900/40">
+                        <span class="uppercase tracking-wider">[SOURCE: FINANCIAL RADAR]</span>
+                        <a href="${t.url}" target="_blank" class="hover:text-yellow-400 flex items-center gap-1">
+                            Buka di X ↗
+                        </a>
+                    </div>
+                </div>
+            `).join('');
+        }
+
         document.addEventListener("DOMContentLoaded", () => {
             initNeuralChart();
+                renderWarIntel();
+                renderXRadar();
 
                 // Populate Report Archive Selector
                 if (tradeData.reports && tradeData.reports.length > 0) {

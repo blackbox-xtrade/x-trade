@@ -1265,5 +1265,87 @@ const tradeData = {
                 "invalidation": "Candle H1 close di atas $4,137.00"
             }
         }
+    ],
+    "war_intel": {
+        "defcon_level": "DEFCON 2 // ESCALATION WATCH",
+        "brent_crude": "$106.40 / bbl (+3.85%)",
+        "transmission_headline": "Transmisi Jalur Minyak & Inflasi Menekan Emas Jangka Pendek",
+        "hotspots": [
+            {
+                "title": "Eskalasi Timur Tengah & Jalur Maritim Laut Merah",
+                "tag": "CRITICAL RISK",
+                "tag_color": "border-red-500 text-red-400 bg-red-950/40",
+                "desc": "Serangan drone dan rudal milisi regional terhadap kapal tanker dan fasilitas energi di Selat Hormuz / Laut Merah memicu lonjakan premi risiko kargo dan asuransi pelayaran."
+            },
+            {
+                "title": "Transmisi Jalur Energi ke Kebijakan The Fed (Inflation Channel)",
+                "tag": "BEARISH IMPACT",
+                "tag_color": "border-red-500 text-red-400 bg-red-950/40",
+                "desc": "Minyak Brent bertahan di atas $106/bbl memicu kekhawatiran sticky inflation (inflasi membandel). The Fed diprediksi menahan suku bunga 5.25%-5.50% lebih lama, menopang Yield US 10Y (5.24%) dan DXY (102.60) yang menekan aset non-yielding emas."
+            },
+            {
+                "title": "Mekanisme Likuiditas vs Safe-Haven Panic Trigger",
+                "tag": "WATCH TRIGGER",
+                "tag_color": "border-yellow-500 text-yellow-400 bg-yellow-950/40",
+                "desc": "Saat ini emas belum memicu panic safe-haven buying karena likuiditas terserap ke kas US Dollar. Namun jika terjadi eskalasi serangan langsung ke fasilitas kilang utama, potensi short-squeeze masif dapat melesat cepat ke $4,200+."
+            }
+        ]
+    },
+    "x_radar": [
+        {
+            "handle": "@DeItaone",
+            "name": "Walter Bloomberg",
+            "url": "https://x.com/DeItaone",
+            "time": "12m ago",
+            "badge": "BREAKING MACRO",
+            "tweet": "MIDDLE EAST ENERGY INFRASTRUCTURE ON HEIGHTENED ALERT FOLLOWING FRESH DRONE INCIDENTS; BRENT CRUDE EXTENDS GAINS ABOVE $106",
+            "impact": "BEARISH VIA USD",
+            "impact_class": "neon-text-red",
+            "impact_badge": "bg-red-950/50 border border-red-500/50 text-red-400"
+        },
+        {
+            "handle": "@FinancialJuice",
+            "name": "FinancialJuice",
+            "url": "https://x.com/FinancialJuice",
+            "time": "28m ago",
+            "badge": "CENTRAL BANK",
+            "tweet": "FED FUNDS FUTURES NOW PUSHING BACK PROBABILITY OF RATE CUTS AS HIGH OIL REIGNITES INFLATIONARY SPIKE FEARS; 10Y YIELD AT 5.24%",
+            "impact": "BEARISH FOR BULLION",
+            "impact_class": "neon-text-red",
+            "impact_badge": "bg-red-950/50 border border-red-500/50 text-red-400"
+        },
+        {
+            "handle": "@KobeissiLetter",
+            "name": "The Kobeissi Letter",
+            "url": "https://x.com/KobeissiLetter",
+            "time": "45m ago",
+            "badge": "LIQUIDITY ANALYSIS",
+            "tweet": "Gold sweeps lower through $4,175 as 76% retail Longs get flushed out. Smart Money distributing supply into retail stop clusters; key buy zone sits at $4,148-$4,150.",
+            "impact": "RETEST LIQUIDATION",
+            "impact_class": "neon-text-yellow",
+            "impact_badge": "bg-yellow-950/50 border border-yellow-500/50 text-yellow-400"
+        },
+        {
+            "handle": "@GoldTelegraph_",
+            "name": "Gold Telegraph \u26a1",
+            "url": "https://x.com/GoldTelegraph_",
+            "time": "1h ago",
+            "badge": "SOVEREIGN FLOWS",
+            "tweet": "Global central banks continue multi-ton physical gold purchases despite surging bond yields. Structural de-dollarization is an unstoppable multi-year macro trend.",
+            "impact": "HTF BULLISH BASE",
+            "impact_class": "neon-text-green",
+            "impact_badge": "bg-green-950/50 border border-green-500/50 text-green-400"
+        },
+        {
+            "handle": "@Fxhedgers",
+            "name": "FXHedge",
+            "url": "https://x.com/Fxhedgers",
+            "time": "2h ago",
+            "badge": "GEOPOLITICS",
+            "tweet": "PENTAGON OFFICIAL CONFIRMS US DESTROYER SHOT DOWN MULTIPLE ONE-WAY ATTACK DRONES OVER RED SEA SHIPPING CORRIDORS",
+            "impact": "SAFE-HAVEN RISK",
+            "impact_class": "neon-text-yellow",
+            "impact_badge": "bg-yellow-950/50 border border-yellow-500/50 text-yellow-400"
+        }
     ]
 };
