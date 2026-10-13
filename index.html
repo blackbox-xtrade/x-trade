@@ -5,7 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blackbox X-Trade [CYBERPUNK NEURAL TERMINAL]</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lightweight-charts@4.1.1/dist/lightweight-charts.standalone.production.js"></script>
+        <script src="https://unpkg.com/lightweight-charts@4.1.1/dist/lightweight-charts.standalone.production.js"></script>
+    <script>
+        if (typeof LightweightCharts === 'undefined') {
+            document.write('<script src="https://cdn.jsdelivr.net/npm/lightweight-charts@4.1.1/dist/lightweight-charts.standalone.production.js"><\/script>');
+        }
+    </script>
     <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@500;600;700&display=swap');
@@ -146,7 +151,7 @@
     <div class="grid grid-cols-1 xl:grid-cols-3 gap-6 relative z-10">
         
         <!-- Enhanced Chart Panel with Drawn Levels -->
-        <div class="xl:col-span-2 glass-panel p-1 rounded-none flex flex-col h-[590px]">
+        <div class="xl:col-span-2 glass-panel p-1 rounded-none flex flex-col h-[600px]">
             <div class="bg-black h-full w-full relative flex flex-col overflow-hidden">
                 
                 <!-- Chart Controls Bar & Quick Badges -->
@@ -155,7 +160,7 @@
                         <span class="bg-cyan-900/60 text-cyan-400 px-2 py-0.5 text-xs cyber-font font-bold tracking-wider">XAUUSD 1H</span>
                         <div class="flex items-center space-x-1">
                             <button id="btn-neural-chart" onclick="switchChartMode('neural')" class="chart-tab-active px-2.5 py-1 text-xs cyber-font font-bold border border-cyan-400 transition-all cursor-pointer">
-                                ⚡ NEURAL CHART (DRAWN TP/SL/FIB)
+                                ⚡ NEURAL CHART (LIVE VECTORS)
                             </button>
                             <button id="btn-tv-chart" onclick="switchChartMode('tv')" class="px-2.5 py-1 text-xs cyber-font font-bold bg-black/60 text-cyan-400 border border-cyan-800 hover:border-cyan-400 transition-all cursor-pointer">
                                 📡 TRADINGVIEW
@@ -163,45 +168,49 @@
                         </div>
                     </div>
                     
-                    <!-- Quick Target Badges -->
+                    <!-- Quick Target Badges (Synced with Live Signal) -->
                     <div class="flex items-center gap-1.5 text-xs font-mono">
-                        <span class="px-2 py-0.5 bg-red-950/80 border border-red-500/60 text-red-400 font-bold">SL: $4,228.00</span>
-                        <span class="px-2 py-0.5 bg-yellow-950/80 border border-yellow-500/60 text-yellow-400 font-bold">ENTRY: $4,216.50</span>
-                        <span class="px-2 py-0.5 bg-green-950/80 border border-green-500/60 text-green-400 font-bold">TP: $4,178.00</span>
-                        <span class="hidden sm:inline-block px-2 py-0.5 bg-cyan-950/80 border border-cyan-500/60 text-cyan-300 font-bold">RR: 1:3.35</span>
+                        <span class="px-2 py-0.5 bg-red-950/80 border border-red-500/60 text-red-400 font-bold">SL: $4,196.00</span>
+                        <span class="px-2 py-0.5 bg-yellow-950/80 border border-yellow-500/60 text-yellow-400 font-bold">ENTRY: $4,185.00</span>
+                        <span class="px-2 py-0.5 bg-green-950/80 border border-green-500/60 text-green-400 font-bold">TP: $4,150.00</span>
+                        <span class="hidden sm:inline-block px-2 py-0.5 bg-cyan-950/80 border border-cyan-500/60 text-cyan-300 font-bold">RR: 1:3.18</span>
                     </div>
                 </div>
 
                 <!-- 1. Neural Drawn Chart View (Lightweight Charts Canvas) -->
-                <div id="neural_chart_wrapper" class="relative w-full flex-1">
-                    <div id="neural_chart_view" class="w-full h-full"></div>
+                <div id="neural_chart_wrapper" class="relative w-full flex-1" style="min-height: 520px; height: 530px;">
+                    <div id="neural_chart_view" class="w-full h-full" style="width: 100%; height: 530px; min-height: 520px;"></div>
                     
                     <!-- Drawn Levels Floating Legend HUD -->
                     <div class="absolute bottom-3 left-3 bg-black/85 border border-cyan-800/80 p-3 text-xs font-mono space-y-1.5 pointer-events-none z-10 backdrop-blur-md rounded shadow-lg max-w-[280px]">
                         <div class="text-cyan-400 font-bold cyber-font text-[10px] tracking-widest border-b border-cyan-900 pb-1">// DRAWN TARGET VECTORS</div>
                         <div class="flex items-center justify-between text-red-400">
                             <span class="flex items-center gap-1.5"><span class="w-3 h-0.5 bg-red-500 inline-block"></span> STOP LOSS (SL)</span>
-                            <span class="font-bold">$4,228.00</span>
+                            <span class="font-bold">$4,196.00</span>
                         </div>
                         <div class="flex items-center justify-between text-yellow-400">
-                            <span class="flex items-center gap-1.5"><span class="w-3 h-0.5 bg-yellow-400 inline-block"></span> ENTRY (0.618 FIB)</span>
-                            <span class="font-bold">$4,216.50</span>
+                            <span class="flex items-center gap-1.5"><span class="w-3 h-0.5 bg-yellow-400 inline-block"></span> ENTRY (RETEST)</span>
+                            <span class="font-bold">$4,185.00</span>
+                        </div>
+                        <div class="flex items-center justify-between text-purple-400">
+                            <span class="flex items-center gap-1.5"><span class="w-3 h-0.5 bg-purple-400 inline-block"></span> FIB 0.382 / FLIP</span>
+                            <span class="font-bold">$4,191.44</span>
                         </div>
                         <div class="flex items-center justify-between text-cyan-300">
                             <span class="flex items-center gap-1.5"><span class="w-3 h-0.5 bg-cyan-400 inline-block"></span> FIB 0.500 RETEST</span>
-                            <span class="font-bold">$4,208.95</span>
+                            <span class="font-bold">$4,201.15</span>
                         </div>
                         <div class="flex items-center justify-between text-emerald-300">
                             <span class="flex items-center gap-1.5"><span class="w-3 h-0.5 bg-emerald-400 inline-block"></span> TAKE PROFIT 1</span>
-                            <span class="font-bold">$4,195.00</span>
+                            <span class="font-bold">$4,162.00</span>
                         </div>
                         <div class="flex items-center justify-between text-green-400 font-bold">
                             <span class="flex items-center gap-1.5"><span class="w-3 h-0.5 bg-green-400 inline-block"></span> TP 2 (SYSTEM TARGET)</span>
-                            <span class="font-bold text-green-300">$4,178.00</span>
+                            <span class="font-bold text-green-300">$4,150.00</span>
                         </div>
                         <div class="flex items-center justify-between text-green-500">
-                            <span class="flex items-center gap-1.5"><span class="w-3 h-0.5 bg-green-600 inline-block"></span> TP 3 (SWEEP LIQUIDITY)</span>
-                            <span class="font-bold">$4,150.00</span>
+                            <span class="flex items-center gap-1.5"><span class="w-3 h-0.5 bg-green-600 inline-block"></span> TP 3 (RUNNER)</span>
+                            <span class="font-bold">$4,120.00</span>
                         </div>
                     </div>
                 </div>
@@ -465,24 +474,26 @@
             const btnTv = document.getElementById('btn-tv-chart');
 
             if (mode === 'neural') {
-                neuralWrapper.classList.remove('hidden');
-                tvWrapper.classList.add('hidden');
-                btnNeural.className = "chart-tab-active px-2.5 py-1 text-xs cyber-font font-bold border border-cyan-400 cursor-pointer";
-                btnTv.className = "px-2.5 py-1 text-xs cyber-font font-bold bg-black/60 text-cyan-400 border border-cyan-800 hover:border-cyan-400 cursor-pointer";
+                if (neuralWrapper) neuralWrapper.classList.remove('hidden');
+                if (tvWrapper) tvWrapper.classList.add('hidden');
+                if (btnNeural) btnNeural.className = "chart-tab-active px-2.5 py-1 text-xs cyber-font font-bold border border-cyan-400 cursor-pointer";
+                if (btnTv) btnTv.className = "px-2.5 py-1 text-xs cyber-font font-bold bg-black/60 text-cyan-400 border border-cyan-800 hover:border-cyan-400 cursor-pointer";
+                
                 if (neuralChart) {
-                    neuralChart.applyOptions({
-                        width: neuralWrapper.clientWidth,
-                        height: neuralWrapper.clientHeight
-                    });
+                    const container = document.getElementById('neural_chart_view');
+                    const w = (container && container.clientWidth) || (neuralWrapper && neuralWrapper.clientWidth) || 800;
+                    const h = (container && container.clientHeight >= 300) ? container.clientHeight : 520;
+                    neuralChart.applyOptions({ width: w, height: h });
                     neuralChart.timeScale().fitContent();
+                } else {
+                    initNeuralChart();
                 }
             } else {
-                neuralWrapper.classList.add('hidden');
-                tvWrapper.classList.remove('hidden');
-                btnTv.className = "chart-tab-active px-2.5 py-1 text-xs cyber-font font-bold border border-cyan-400 cursor-pointer";
-                btnNeural.className = "px-2.5 py-1 text-xs cyber-font font-bold bg-black/60 text-cyan-400 border border-cyan-800 hover:border-cyan-400 cursor-pointer";
+                if (neuralWrapper) neuralWrapper.classList.add('hidden');
+                if (tvWrapper) tvWrapper.classList.remove('hidden');
+                if (btnTv) btnTv.className = "chart-tab-active px-2.5 py-1 text-xs cyber-font font-bold border border-cyan-400 cursor-pointer";
+                if (btnNeural) btnNeural.className = "px-2.5 py-1 text-xs cyber-font font-bold bg-black/60 text-cyan-400 border border-cyan-800 hover:border-cyan-400 cursor-pointer";
                 
-                // Initialize TV widget on demand if needed
                 if (!tvWidgetInstance && typeof TradingView !== 'undefined') {
                     tvWidgetInstance = new TradingView.widget({
                         "autosize": true,
@@ -504,161 +515,226 @@
             }
         }
 
-        function initNeuralChart() {
+        function initNeuralChart(retryCount = 0) {
             const container = document.getElementById('neural_chart_view');
-            if (!container || typeof LightweightCharts === 'undefined') return;
+            if (!container) return;
 
-            neuralChart = LightweightCharts.createChart(container, {
-                width: container.clientWidth,
-                height: container.clientHeight,
-                layout: {
-                    background: { color: '#03070a' },
-                    textColor: '#67e8f9',
-                    fontFamily: 'Rajdhani, monospace',
-                },
-                grid: {
-                    vertLines: { color: 'rgba(6, 182, 212, 0.08)' },
-                    horzLines: { color: 'rgba(6, 182, 212, 0.08)' },
-                },
-                crosshair: {
-                    mode: LightweightCharts.CrosshairMode.Normal,
-                    vertLine: { color: '#06b6d4', width: 1, style: LightweightCharts.LineStyle.Dashed },
-                    horzLine: { color: '#06b6d4', width: 1, style: LightweightCharts.LineStyle.Dashed },
-                },
-                rightPriceScale: {
-                    borderColor: 'rgba(6, 182, 212, 0.3)',
-                    scaleMargins: { top: 0.1, bottom: 0.15 },
-                },
-                timeScale: {
-                    borderColor: 'rgba(6, 182, 212, 0.3)',
-                    timeVisible: true,
-                    secondsVisible: false,
-                },
-            });
-
-            candleSeries = neuralChart.addCandlestickSeries({
-                upColor: '#22c55e',
-                downColor: '#ef4444',
-                borderDownColor: '#ef4444',
-                borderUpColor: '#22c55e',
-                wickDownColor: '#ef4444',
-                wickUpColor: '#22c55e',
-            });
-
-            if (window.tradeData && window.tradeData.candles && window.tradeData.candles.length > 0) {
-                candleSeries.setData(window.tradeData.candles);
-
-                // --- 1. STOP LOSS LINE ---
-                candleSeries.createPriceLine({
-                    price: 4228.00,
-                    color: '#ef4444',
-                    lineWidth: 2,
-                    lineStyle: LightweightCharts.LineStyle.Dashed,
-                    axisLabelVisible: true,
-                    title: 'STOP LOSS ($4,228.00)',
-                });
-
-                // --- 2. SELL LIMIT ENTRY (0.618 FIB) ---
-                candleSeries.createPriceLine({
-                    price: 4216.50,
-                    color: '#eab308',
-                    lineWidth: 2,
-                    lineStyle: LightweightCharts.LineStyle.Solid,
-                    axisLabelVisible: true,
-                    title: 'SELL LIMIT ENTRY ($4,216.50 - 0.618 Fib)',
-                });
-
-                // --- 3. FIBONACCI 0.500 RETEST ---
-                candleSeries.createPriceLine({
-                    price: 4208.95,
-                    color: '#06b6d4',
-                    lineWidth: 1,
-                    lineStyle: LightweightCharts.LineStyle.Dotted,
-                    axisLabelVisible: true,
-                    title: 'FIB 0.500 ($4,208.95)',
-                });
-
-                // --- 4. FIBONACCI 0.382 ---
-                candleSeries.createPriceLine({
-                    price: 4201.08,
-                    color: '#a855f7',
-                    lineWidth: 1,
-                    lineStyle: LightweightCharts.LineStyle.Dotted,
-                    axisLabelVisible: false,
-                    title: 'FIB 0.382 ($4,201.08)',
-                });
-
-                // --- 5. TAKE PROFIT 1 ---
-                candleSeries.createPriceLine({
-                    price: 4195.00,
-                    color: '#34d399',
-                    lineWidth: 1,
-                    lineStyle: LightweightCharts.LineStyle.Dashed,
-                    axisLabelVisible: true,
-                    title: 'TP 1 ($4,195.00)',
-                });
-
-                // --- 6. TAKE PROFIT 2 (MAIN TARGET) ---
-                candleSeries.createPriceLine({
-                    price: 4178.00,
-                    color: '#22c55e',
-                    lineWidth: 2,
-                    lineStyle: LightweightCharts.LineStyle.Solid,
-                    axisLabelVisible: true,
-                    title: 'TP 2 TARGET ($4,178.00)',
-                });
-
-                // --- 7. TAKE PROFIT 3 (LIQUIDITY SWEEP) ---
-                candleSeries.createPriceLine({
-                    price: 4150.00,
-                    color: '#059669',
-                    lineWidth: 1,
-                    lineStyle: LightweightCharts.LineStyle.Dashed,
-                    axisLabelVisible: true,
-                    title: 'TP 3 ($4,150.00)',
-                });
-
-                // Add Analysis Markers
-                const candles = window.tradeData.candles;
-                const highCandle = candles.reduce((max, c) => c.high > max.high ? c : max, candles[0]);
-                const lowCandle = candles.reduce((min, c) => c.low < min.low ? c : min, candles[0]);
-                const lastCandle = candles[candles.length - 1];
-
-                candleSeries.setMarkers([
-                    {
-                        time: highCandle.time,
-                        position: 'aboveBar',
-                        color: '#f43f5e',
-                        shape: 'arrowDown',
-                        text: 'SWING HIGH 4242.30 [LIQUIDITY SWEEP]',
-                    },
-                    {
-                        time: lowCandle.time,
-                        position: 'belowBar',
-                        color: '#06b6d4',
-                        shape: 'arrowUp',
-                        text: 'SWING LOW 4175.60 [1H BOS]',
-                    },
-                    {
-                        time: lastCandle.time,
-                        position: 'aboveBar',
-                        color: '#eab308',
-                        shape: 'circle',
-                        text: 'ACTIVE SETUP: SELL LIMIT @ $4216.50',
-                    }
-                ]);
-
-                neuralChart.timeScale().fitContent();
+            // Robust CDN load checking with retry
+            if (typeof LightweightCharts === 'undefined') {
+                if (retryCount < 25) {
+                    setTimeout(() => initNeuralChart(retryCount + 1), 150);
+                } else {
+                    console.error("LightweightCharts failed to load after retries.");
+                    container.innerHTML = '<div class="flex items-center justify-center h-full text-red-400 font-mono text-xs">⚠️ Chart Library Loading... Silakan gunakan TRADINGVIEW tab di atas.</div>';
+                }
+                return;
             }
 
-            window.addEventListener('resize', () => {
-                if (neuralChart && container) {
-                    neuralChart.applyOptions({
-                        width: container.clientWidth,
-                        height: container.clientHeight
-                    });
+            if (neuralChart) {
+                try {
+                    const w = container.clientWidth || 800;
+                    const h = container.clientHeight >= 300 ? container.clientHeight : 520;
+                    neuralChart.applyOptions({ width: w, height: h });
+                    neuralChart.timeScale().fitContent();
+                } catch(e) {}
+                return;
+            }
+
+            try {
+                const containerWidth = container.clientWidth || (container.parentElement ? container.parentElement.clientWidth : 800) || 800;
+                const containerHeight = (container.clientHeight >= 300) ? container.clientHeight : 520;
+
+                neuralChart = LightweightCharts.createChart(container, {
+                    width: containerWidth,
+                    height: containerHeight,
+                    layout: {
+                        background: { color: '#03070a' },
+                        textColor: '#67e8f9',
+                        fontFamily: 'Rajdhani, monospace',
+                    },
+                    grid: {
+                        vertLines: { color: 'rgba(6, 182, 212, 0.08)' },
+                        horzLines: { color: 'rgba(6, 182, 212, 0.08)' },
+                    },
+                    crosshair: {
+                        mode: LightweightCharts.CrosshairMode.Normal,
+                        vertLine: { color: '#06b6d4', width: 1, style: LightweightCharts.LineStyle.Dashed },
+                        horzLine: { color: '#06b6d4', width: 1, style: LightweightCharts.LineStyle.Dashed },
+                    },
+                    rightPriceScale: {
+                        borderColor: 'rgba(6, 182, 212, 0.3)',
+                        scaleMargins: { top: 0.1, bottom: 0.15 },
+                    },
+                    timeScale: {
+                        borderColor: 'rgba(6, 182, 212, 0.3)',
+                        timeVisible: true,
+                        secondsVisible: false,
+                    },
+                });
+
+                candleSeries = neuralChart.addCandlestickSeries({
+                    upColor: '#22c55e',
+                    downColor: '#ef4444',
+                    borderDownColor: '#ef4444',
+                    borderUpColor: '#22c55e',
+                    wickDownColor: '#ef4444',
+                    wickUpColor: '#22c55e',
+                });
+
+                if (window.tradeData && window.tradeData.candles && window.tradeData.candles.length > 0) {
+                    candleSeries.setData(window.tradeData.candles);
+
+                    const levels = window.tradeData.chart_levels || {
+                        sl: 4196.00,
+                        entry: 4185.00,
+                        tp1: 4162.00,
+                        tp2: 4150.00,
+                        tp3: 4120.00,
+                        fib_0618: 4210.86,
+                        fib_0500: 4201.15,
+                        fib_0382: 4191.44
+                    };
+
+                    // Draw Price Lines
+                    if (levels.sl) {
+                        candleSeries.createPriceLine({
+                            price: levels.sl,
+                            color: '#ef4444',
+                            lineWidth: 2,
+                            lineStyle: LightweightCharts.LineStyle.Dashed,
+                            axisLabelVisible: true,
+                            title: `STOP LOSS ($${levels.sl.toFixed(2)})`,
+                        });
+                    }
+
+                    if (levels.entry) {
+                        candleSeries.createPriceLine({
+                            price: levels.entry,
+                            color: '#eab308',
+                            lineWidth: 2,
+                            lineStyle: LightweightCharts.LineStyle.Solid,
+                            axisLabelVisible: true,
+                            title: `ENTRY ($${levels.entry.toFixed(2)})`,
+                        });
+                    }
+
+                    if (levels.fib_0500) {
+                        candleSeries.createPriceLine({
+                            price: levels.fib_0500,
+                            color: '#06b6d4',
+                            lineWidth: 1,
+                            lineStyle: LightweightCharts.LineStyle.Dotted,
+                            axisLabelVisible: true,
+                            title: `FIB 0.500 ($${levels.fib_0500.toFixed(2)})`,
+                        });
+                    }
+
+                    if (levels.fib_0382) {
+                        candleSeries.createPriceLine({
+                            price: levels.fib_0382,
+                            color: '#a855f7',
+                            lineWidth: 1,
+                            lineStyle: LightweightCharts.LineStyle.Dotted,
+                            axisLabelVisible: false,
+                            title: `FIB 0.382 ($${levels.fib_0382.toFixed(2)})`,
+                        });
+                    }
+
+                    if (levels.tp1) {
+                        candleSeries.createPriceLine({
+                            price: levels.tp1,
+                            color: '#34d399',
+                            lineWidth: 1,
+                            lineStyle: LightweightCharts.LineStyle.Dashed,
+                            axisLabelVisible: true,
+                            title: `TP 1 ($${levels.tp1.toFixed(2)})`,
+                        });
+                    }
+
+                    if (levels.tp2) {
+                        candleSeries.createPriceLine({
+                            price: levels.tp2,
+                            color: '#22c55e',
+                            lineWidth: 2,
+                            lineStyle: LightweightCharts.LineStyle.Solid,
+                            axisLabelVisible: true,
+                            title: `TP 2 TARGET ($${levels.tp2.toFixed(2)})`,
+                        });
+                    }
+
+                    if (levels.tp3) {
+                        candleSeries.createPriceLine({
+                            price: levels.tp3,
+                            color: '#059669',
+                            lineWidth: 1,
+                            lineStyle: LightweightCharts.LineStyle.Dashed,
+                            axisLabelVisible: true,
+                            title: `TP 3 ($${levels.tp3.toFixed(2)})`,
+                        });
+                    }
+
+                    // Add Analysis Markers (STRICTLY ASCENDING BY TIME)
+                    try {
+                        const candles = window.tradeData.candles;
+                        const highCandle = candles.reduce((max, c) => c.high > max.high ? c : max, candles[0]);
+                        const lowCandle = candles.reduce((min, c) => c.low < min.low ? c : min, candles[0]);
+                        const lastCandle = candles[candles.length - 1];
+
+                        const rawMarkers = [];
+                        if (highCandle) {
+                            rawMarkers.push({
+                                time: highCandle.time,
+                                position: 'aboveBar',
+                                color: '#f43f5e',
+                                shape: 'arrowDown',
+                                text: `SWING HIGH $${highCandle.high.toFixed(2)}`,
+                            });
+                        }
+                        if (lowCandle && lowCandle.time !== highCandle.time) {
+                            rawMarkers.push({
+                                time: lowCandle.time,
+                                position: 'belowBar',
+                                color: '#06b6d4',
+                                shape: 'arrowUp',
+                                text: `SWING LOW $${lowCandle.low.toFixed(2)}`,
+                            });
+                        }
+                        if (lastCandle && lastCandle.time !== highCandle.time && lastCandle.time !== lowCandle.time) {
+                            rawMarkers.push({
+                                time: lastCandle.time,
+                                position: 'aboveBar',
+                                color: '#eab308',
+                                shape: 'circle',
+                                text: `ACTIVE SETUP: SELL LIMIT @ $${levels.entry.toFixed(2)}`,
+                            });
+                        }
+
+                        // CRITICAL: LightweightCharts requires markers to be sorted by time ascending
+                        rawMarkers.sort((a, b) => a.time - b.time);
+                        candleSeries.setMarkers(rawMarkers);
+                    } catch (markerErr) {
+                        console.warn("Chart markers notice:", markerErr);
+                    }
+
+                    neuralChart.timeScale().fitContent();
+                    setTimeout(() => {
+                        if (neuralChart) neuralChart.timeScale().fitContent();
+                    }, 250);
                 }
-            });
+
+                window.addEventListener('resize', () => {
+                    if (neuralChart && container) {
+                        const w = container.clientWidth || 800;
+                        const h = container.clientHeight >= 300 ? container.clientHeight : 520;
+                        neuralChart.applyOptions({ width: w, height: h });
+                    }
+                });
+
+                console.log("⚡ Neural Chart initialized successfully!");
+
+            } catch (err) {
+                console.error("Critical error in initNeuralChart:", err);
+            }
         }
 
         
