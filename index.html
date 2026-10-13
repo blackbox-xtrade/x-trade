@@ -3,10 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blackbox X-Trade [CYBERPUNK]</title>
+    <title>Blackbox X-Trade [CYBERPUNK NEURAL TERMINAL]</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lightweight-charts@4.1.1/dist/lightweight-charts.standalone.production.js"></script>
+    <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@500;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@500;600;700&display=swap');
 
         body { 
             background-color: #050505; 
@@ -24,7 +26,7 @@
         }
 
         .glass-panel { 
-            background: rgba(10, 15, 20, 0.85); 
+            background: rgba(10, 15, 20, 0.88); 
             backdrop-filter: blur(8px); 
             border: 1px solid rgba(6, 182, 212, 0.3);
             box-shadow: 0 0 15px rgba(6, 182, 212, 0.1), inset 0 0 10px rgba(6, 182, 212, 0.05);
@@ -55,7 +57,14 @@
         .scanlines {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0) 50%, rgba(0,0,0,0.25) 50%, rgba(0,0,0,0.25));
-            background-size: 100% 4px; pointer-events: none; z-index: 50; opacity: 0.6;
+            background-size: 100% 4px; pointer-events: none; z-index: 50; opacity: 0.5;
+        }
+
+        .chart-tab-active {
+            background-color: #06b6d4 !important;
+            color: #000000 !important;
+            border-color: #22d3ee !important;
+            box-shadow: 0 0 12px rgba(6, 182, 212, 0.6) !important;
         }
     </style>
 </head>
@@ -74,7 +83,7 @@
         </div>
     </header>
 
-    <!-- Stat Summary (RESET TO ZERO) -->
+    <!-- Stat Summary -->
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6 relative z-10">
         <div class="glass-panel neon-border-green p-4 rounded-none text-center">
             <p class="text-green-500/70 text-xs font-bold uppercase tracking-wider cyber-font">System Winrate</p>
@@ -94,38 +103,79 @@
         </div>
     </div>
 
+    <!-- Main Section: Chart & Signal -->
     <div class="grid grid-cols-1 xl:grid-cols-3 gap-6 relative z-10">
         
-        <!-- Chart -->
-        <div class="xl:col-span-2 glass-panel p-1 rounded-none flex flex-col h-[550px]">
-            <div class="bg-black h-full w-full relative">
-                <div class="absolute top-0 left-0 bg-cyan-900/50 text-cyan-400 px-3 py-1 text-xs cyber-font z-20 pointer-events-none">XAUUSD // TERMINAL_VIEW</div>
-                <div class="tradingview-widget-container h-full w-full pt-6">
-                <div id="tradingview_xauusd" class="h-full"></div>
-                <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
-                <script type="text/javascript">
-                new TradingView.widget({
-                "autosize": true,
-                "symbol": "OANDA:XAUUSD",
-                "interval": "60",
-                "timezone": "Asia/Jakarta",
-                "theme": "dark",
-                "style": "1",
-                "locale": "id",
-                "enable_publishing": false,
-                "backgroundColor": "#000000",
-                "gridColor": "rgba(6, 182, 212, 0.1)",
-                "hide_top_toolbar": false,
-                "hide_legend": false,
-                "save_image": false,
-                "container_id": "tradingview_xauusd"
-                });
-                </script>
+        <!-- Enhanced Chart Panel with Drawn Levels -->
+        <div class="xl:col-span-2 glass-panel p-1 rounded-none flex flex-col h-[590px]">
+            <div class="bg-black h-full w-full relative flex flex-col overflow-hidden">
+                
+                <!-- Chart Controls Bar & Quick Badges -->
+                <div class="flex flex-wrap items-center justify-between bg-cyan-950/70 border-b border-cyan-800/60 px-3 py-2 z-20 gap-2">
+                    <div class="flex items-center gap-2">
+                        <span class="bg-cyan-900/60 text-cyan-400 px-2 py-0.5 text-xs cyber-font font-bold tracking-wider">XAUUSD 1H</span>
+                        <div class="flex items-center space-x-1">
+                            <button id="btn-neural-chart" onclick="switchChartMode('neural')" class="chart-tab-active px-2.5 py-1 text-xs cyber-font font-bold border border-cyan-400 transition-all cursor-pointer">
+                                ⚡ NEURAL CHART (DRAWN TP/SL/FIB)
+                            </button>
+                            <button id="btn-tv-chart" onclick="switchChartMode('tv')" class="px-2.5 py-1 text-xs cyber-font font-bold bg-black/60 text-cyan-400 border border-cyan-800 hover:border-cyan-400 transition-all cursor-pointer">
+                                📡 TRADINGVIEW
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Quick Target Badges -->
+                    <div class="flex items-center gap-1.5 text-xs font-mono">
+                        <span class="px-2 py-0.5 bg-red-950/80 border border-red-500/60 text-red-400 font-bold">SL: $4,228.00</span>
+                        <span class="px-2 py-0.5 bg-yellow-950/80 border border-yellow-500/60 text-yellow-400 font-bold">ENTRY: $4,216.50</span>
+                        <span class="px-2 py-0.5 bg-green-950/80 border border-green-500/60 text-green-400 font-bold">TP: $4,178.00</span>
+                        <span class="hidden sm:inline-block px-2 py-0.5 bg-cyan-950/80 border border-cyan-500/60 text-cyan-300 font-bold">RR: 1:3.35</span>
+                    </div>
                 </div>
+
+                <!-- 1. Neural Drawn Chart View (Lightweight Charts Canvas) -->
+                <div id="neural_chart_wrapper" class="relative w-full flex-1">
+                    <div id="neural_chart_view" class="w-full h-full"></div>
+                    
+                    <!-- Drawn Levels Floating Legend HUD -->
+                    <div class="absolute bottom-3 left-3 bg-black/85 border border-cyan-800/80 p-3 text-xs font-mono space-y-1.5 pointer-events-none z-10 backdrop-blur-md rounded shadow-lg max-w-[280px]">
+                        <div class="text-cyan-400 font-bold cyber-font text-[10px] tracking-widest border-b border-cyan-900 pb-1">// DRAWN TARGET VECTORS</div>
+                        <div class="flex items-center justify-between text-red-400">
+                            <span class="flex items-center gap-1.5"><span class="w-3 h-0.5 bg-red-500 inline-block"></span> STOP LOSS (SL)</span>
+                            <span class="font-bold">$4,228.00</span>
+                        </div>
+                        <div class="flex items-center justify-between text-yellow-400">
+                            <span class="flex items-center gap-1.5"><span class="w-3 h-0.5 bg-yellow-400 inline-block"></span> ENTRY (0.618 FIB)</span>
+                            <span class="font-bold">$4,216.50</span>
+                        </div>
+                        <div class="flex items-center justify-between text-cyan-300">
+                            <span class="flex items-center gap-1.5"><span class="w-3 h-0.5 bg-cyan-400 inline-block"></span> FIB 0.500 RETEST</span>
+                            <span class="font-bold">$4,208.95</span>
+                        </div>
+                        <div class="flex items-center justify-between text-emerald-300">
+                            <span class="flex items-center gap-1.5"><span class="w-3 h-0.5 bg-emerald-400 inline-block"></span> TAKE PROFIT 1</span>
+                            <span class="font-bold">$4,195.00</span>
+                        </div>
+                        <div class="flex items-center justify-between text-green-400 font-bold">
+                            <span class="flex items-center gap-1.5"><span class="w-3 h-0.5 bg-green-400 inline-block"></span> TP 2 (SYSTEM TARGET)</span>
+                            <span class="font-bold text-green-300">$4,178.00</span>
+                        </div>
+                        <div class="flex items-center justify-between text-green-500">
+                            <span class="flex items-center gap-1.5"><span class="w-3 h-0.5 bg-green-600 inline-block"></span> TP 3 (SWEEP LIQUIDITY)</span>
+                            <span class="font-bold">$4,150.00</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. TradingView Widget View -->
+                <div id="tradingview_chart_wrapper" class="relative w-full flex-1 hidden">
+                    <div id="tradingview_xauusd" class="h-full w-full"></div>
+                </div>
+
             </div>
         </div>
 
-        <!-- Sinyal & Sentiment -->
+        <!-- Sinyal & Sentiment Panel -->
         <div class="space-y-6">
             <div class="glass-panel neon-border-red p-5 rounded-none bg-black/60">
                 <h2 class="text-xl font-bold mb-3 neon-text-red">> OVERRIDE: ACTIVE_SETUP</h2>
@@ -164,7 +214,7 @@
         </div>
     </div>
 
-    <!-- Trade Performance (CLEARED) -->
+    <!-- Execution Log Table -->
     <div class="mt-6 glass-panel p-6 rounded-none relative z-10">
         <h2 class="text-xl font-bold mb-4 neon-text-cyan">> EXECUTION_LOG // ONGOING</h2>
         <div class="overflow-x-auto">
@@ -222,7 +272,7 @@
         </div>
     </div>
 
-    <!-- Macro Datastream -->
+    <!-- Macro Datastream & Calendar -->
     <div class="grid grid-cols-1 xl:grid-cols-2 gap-6 mt-6 relative z-10">
         
         <div class="glass-panel p-6 rounded-none border-l-4 border-l-cyan-500">
@@ -260,73 +310,474 @@
         </div>
     </div>
 
+    <!-- ======================================================== -->
+    <!-- DEEP INTELLIGENCE DOSSIER: COMPLETE 11-SECTION REPORT     -->
+    <!-- ======================================================== -->
+    <section class="mt-8 relative z-10">
+        <div class="glass-panel p-6 rounded-none border border-cyan-500/50">
+            <div class="flex flex-col md:flex-row md:items-center justify-between pb-4 border-b border-cyan-800/80 mb-6 gap-2">
+                <div>
+                    <h2 class="text-2xl font-black neon-text-yellow flex items-center gap-2">
+                        <span>//</span> DEEP INTELLIGENCE DOSSIER: XAUUSD REPORT
+                    </h2>
+                    <p class="text-cyan-400 text-xs cyber-font tracking-wider mt-1">Multi-Timeframe Confluence, Institutional Orderbook, Fibonacci &amp; Safety Diagnostics</p>
+                </div>
+                <div class="text-right">
+                    <span class="bg-cyan-950 border border-cyan-500/50 text-cyan-300 text-xs px-3 py-1 font-mono uppercase">
+                        SESSION: 13 OCT 2026 // NY-LONDON OVERLAP
+                    </span>
+                </div>
+            </div>
+
+            <!-- Report Grid Layout -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 font-mono text-sm">
+                
+                <!-- 1. Market, News & Geopolitics -->
+                <div class="bg-black/60 border border-cyan-900/60 p-4">
+                    <h3 class="text-cyan-400 font-bold cyber-font text-xs uppercase mb-3 flex items-center gap-2">
+                        <span class="text-yellow-400">01.</span> MARKET, NEWS &amp; GEOPOLITICS
+                    </h3>
+                    <ul class="space-y-2 text-cyan-100/90 text-xs leading-relaxed">
+                        <li><strong class="text-cyan-300">XAUUSD Context:</strong> $4,180.80 (24h Range: $4,175.60 - $4,242.30). Koreksi teknikal pasca penolakan di resistance $4,242.</li>
+                        <li><strong class="text-cyan-300">DXY &amp; Yields:</strong> DXY kokoh di 102.49 - 102.57. Yield US 10Y bertengger di 5.24% memicu opportunity cost tinggi untuk aset tanpa bunga.</li>
+                        <li><strong class="text-cyan-300">Geopolitik &amp; Safe-Haven:</strong> Konflik Timur Tengah menaikkan harga minyak, memicu ketakutan sticky inflation dan menekan ekspektasi pemotongan suku bunga Fed.</li>
+                        <li><strong class="text-cyan-300">Data Ekonomi / Fed:</strong> Antisipasi FOMC Minutes; pasar priced-in suku bunga tinggi bertahan lebih lama.</li>
+                        <li><strong class="text-cyan-300">Kesimpulan Fundamental:</strong> <span class="neon-text-red font-bold">BEARISH PRESSURE</span>.</li>
+                        <li><strong class="text-cyan-300">Jam News Kritis (WIB):</strong> 14:00 - 16:30 (London) &amp; 19:30, 21:00 (New York).</li>
+                    </ul>
+                </div>
+
+                <!-- 2. Orderbook, Sentiment & Liquidity -->
+                <div class="bg-black/60 border border-cyan-900/60 p-4">
+                    <h3 class="text-cyan-400 font-bold cyber-font text-xs uppercase mb-3 flex items-center gap-2">
+                        <span class="text-yellow-400">02.</span> ORDERBOOK, SENTIMENT &amp; LIQUIDITY
+                    </h3>
+                    <div class="space-y-3 text-xs">
+                        <div>
+                            <div class="flex justify-between text-cyan-300 mb-1">
+                                <span>Retail Sentiment (OANDA/IG)</span>
+                                <span class="text-yellow-400 font-bold">74% LONG vs 26% SHORT</span>
+                            </div>
+                            <div class="w-full bg-cyan-950 h-2 border border-cyan-800">
+                                <div class="bg-red-500 h-full" style="width: 74%;"></div>
+                            </div>
+                            <p class="text-[11px] text-red-300/80 mt-1">Ekstremitas Long ritel membuka peluang Smart Money melikuidasi posisi buyer ke bawah.</p>
+                        </div>
+                        <ul class="space-y-2 text-cyan-100/90 leading-relaxed">
+                            <li><strong class="text-cyan-300">COT / Institutional Bias:</strong> Net Short hedge pada swing rally. Smart Money bertindak sebagai penyedia likuiditas atas.</li>
+                            <li><strong class="text-cyan-300">Stop Loss Clusters:</strong> Buy Stops menumpuk di $4,215 - $4,222. Sell Stops ritel berada di bawah $4,175 - $4,150.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 3. Multi-Timeframe Analysis -->
+                <div class="bg-black/60 border border-cyan-900/60 p-4">
+                    <h3 class="text-cyan-400 font-bold cyber-font text-xs uppercase mb-3 flex items-center gap-2">
+                        <span class="text-yellow-400">03.</span> MULTI-TIMEFRAME ANALYSIS
+                    </h3>
+                    <ul class="space-y-2 text-cyan-100/90 text-xs leading-relaxed">
+                        <li><strong class="text-cyan-300">TF 1D:</strong> Makro uptrend dalam fase koreksi sehat setelah rejection candle tajam di $4,242.30.</li>
+                        <li><strong class="text-cyan-300">TF 4H:</strong> Market structure membentuk Lower High (LH) $4,242.30 dan menguji support likuiditas $4,175.60.</li>
+                        <li><strong class="text-cyan-300">TF 1H:</strong> Bearish Structure. BOS (Break of Structure) ke bawah di bawah $4,195.00 terkonfirmasi.</li>
+                        <li><strong class="text-cyan-300">TF 15M:</strong> Bearish compression di bawah dynamic resistance EMA 55.</li>
+                        <li><strong class="text-cyan-300">Key Levels:</strong> R1: $4,208.00 | R2: $4,216.50 | R3: $4,228.00 | S1: $4,175.60 | S2: $4,150.00.</li>
+                    </ul>
+                </div>
+
+                <!-- 4. Fibonacci Matrix -->
+                <div class="bg-black/60 border border-cyan-900/60 p-4">
+                    <h3 class="text-cyan-400 font-bold cyber-font text-xs uppercase mb-3 flex items-center gap-2">
+                        <span class="text-yellow-400">04.</span> FIBONACCI RETRACEMENT (H: 4242.30 - L: 4175.60)
+                    </h3>
+                    <div class="grid grid-cols-2 gap-2 text-xs mb-3">
+                        <div class="bg-cyan-950/40 p-2 border border-cyan-900">0.382 Fib: <span class="text-cyan-300 font-bold">$4,201.08</span></div>
+                        <div class="bg-cyan-950/40 p-2 border border-cyan-900">0.500 Fib: <span class="text-cyan-300 font-bold">$4,208.95</span></div>
+                        <div class="bg-yellow-950/40 p-2 border border-yellow-700/60 col-span-2">
+                            <span class="text-yellow-400 font-bold">0.618 Fib (Golden Pocket): $4,216.82</span> 
+                            <span class="text-[11px] text-gray-300 block">Sangat presisi dengan Target Entry Setup ($4,216.50)</span>
+                        </div>
+                        <div class="bg-red-950/40 p-2 border border-red-900">0.786 Fib: <span class="text-red-400 font-bold">$4,228.03</span></div>
+                        <div class="bg-cyan-950/40 p-2 border border-cyan-900">0.886 Fib: <span class="text-cyan-300 font-bold">$4,234.70</span></div>
+                    </div>
+                    <p class="text-[11px] text-cyan-200"><strong>Confluence:</strong> Area $4,216.50 menyatukan 0.618 Fib Golden Pocket dengan 1H Bearish Order Block.</p>
+                </div>
+
+                <!-- 5. MA 8 & EMA 55 -->
+                <div class="bg-black/60 border border-cyan-900/60 p-4">
+                    <h3 class="text-cyan-400 font-bold cyber-font text-xs uppercase mb-3 flex items-center gap-2">
+                        <span class="text-yellow-400">05.</span> MA 8 &amp; EMA 55 DIAGNOSTICS
+                    </h3>
+                    <ul class="space-y-2 text-cyan-100/90 text-xs leading-relaxed">
+                        <li><strong class="text-cyan-300">TF 1H:</strong> MA 8 ($4,189.00) melintas di bawah EMA 55 ($4,192.60) — Death Cross Bearish Alignment. Running price ($4,180.80) di bawah kedua moving average.</li>
+                        <li><strong class="text-cyan-300">TF 15M:</strong> MA 8 ($4,183.81) di bawah EMA 55 ($4,193.28). Setiap upaya pullback tertahan ketat oleh slope bearish.</li>
+                        <li><strong class="text-cyan-300">Bias Indikator:</strong> Seller mempertahankan kontrol dynamic supply.</li>
+                    </ul>
+                </div>
+
+                <!-- 6. Pattern Identification -->
+                <div class="bg-black/60 border border-cyan-900/60 p-4">
+                    <h3 class="text-cyan-400 font-bold cyber-font text-xs uppercase mb-3 flex items-center gap-2">
+                        <span class="text-yellow-400">06.</span> PATTERN IDENTIFICATION
+                    </h3>
+                    <ul class="space-y-2 text-cyan-100/90 text-xs leading-relaxed">
+                        <li><strong class="text-cyan-300">Pola:</strong> Bear Flag / Descending Expansion Channel pada TF 1H.</li>
+                        <li><strong class="text-cyan-300">Liquidity Sweep:</strong> Terkonfirmasi di $4,242.30 sebelum akselerasi impulsif ke bawah.</li>
+                        <li><strong class="text-cyan-300">Validasi:</strong> BOS di bawah $4,195.00 mengonfirmasi kelanjutan arah bearish.</li>
+                        <li><strong class="text-cyan-300">Level Invalidasi Pola:</strong> Penutupan candle H1/H4 di atas $4,228.00.</li>
+                    </ul>
+                </div>
+
+                <!-- 7. Bias & Scoring -->
+                <div class="bg-black/60 border border-cyan-900/60 p-4">
+                    <h3 class="text-cyan-400 font-bold cyber-font text-xs uppercase mb-3 flex items-center gap-2">
+                        <span class="text-yellow-400">07.</span> BIAS DETERMINATION &amp; SCORING
+                    </h3>
+                    <div class="grid grid-cols-2 gap-3 mb-3">
+                        <div class="bg-red-950/30 border border-red-500/40 p-3 text-center">
+                            <span class="text-xs text-red-300 block">SELL SCORE</span>
+                            <span class="text-2xl font-black neon-text-red">8.5 / 10</span>
+                        </div>
+                        <div class="bg-green-950/30 border border-green-500/40 p-3 text-center">
+                            <span class="text-xs text-green-300 block">BUY SCORE</span>
+                            <span class="text-2xl font-black text-green-500">3.5 / 10</span>
+                        </div>
+                    </div>
+                    <p class="text-[11px] text-cyan-200">HTF: Neutral-Bearish | 1H: Bearish | 15M: Bearish. Dominasi tekanan jual sangat terukur secara teknikal dan fundamental.</p>
+                </div>
+
+                <!-- 8. 3 Skenario Trading -->
+                <div class="bg-black/60 border border-cyan-900/60 p-4 lg:col-span-2">
+                    <h3 class="text-cyan-400 font-bold cyber-font text-xs uppercase mb-3 flex items-center gap-2">
+                        <span class="text-yellow-400">08.</span> 3 ACTIONABLE TRADING SCENARIOS
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+                        
+                        <div class="border border-red-500/50 bg-red-950/20 p-3 relative">
+                            <span class="absolute top-2 right-2 px-1.5 py-0.5 bg-red-500 text-black font-bold text-[10px]">PRIMARY</span>
+                            <h4 class="font-bold text-red-400 mb-2">SCENARIO B (SELL LIMIT)</h4>
+                            <p><strong>Entry Zone:</strong> $4,214.00 - $4,218.00</p>
+                            <p><strong>Ideal Entry:</strong> <span class="neon-text-yellow font-bold">$4,216.50</span></p>
+                            <p><strong>Stop Loss:</strong> $4,228.00 (115 pips)</p>
+                            <p><strong>Take Profit:</strong> TP1: $4,195 | TP2: $4,178 | TP3: $4,150</p>
+                            <p><strong>RR:</strong> 1 : 3.35 (ke TP2) / 1 : 5.78 (ke TP3)</p>
+                            <p class="text-[11px] text-gray-400 mt-1">Confluence Golden Pocket 0.618 + 1H Bearish OB.</p>
+                        </div>
+
+                        <div class="border border-green-500/30 bg-green-950/10 p-3">
+                            <h4 class="font-bold text-green-400 mb-2">SCENARIO A (BUY LIMIT)</h4>
+                            <p><strong>Entry Zone:</strong> $4,145.00 - $4,150.00</p>
+                            <p><strong>Ideal Entry:</strong> $4,148.00</p>
+                            <p><strong>Stop Loss:</strong> $4,136.00 (120 pips)</p>
+                            <p><strong>Take Profit:</strong> TP1: $4,165 | TP2: $4,185 | TP3: $4,210</p>
+                            <p><strong>RR:</strong> 1 : 2.50+</p>
+                            <p class="text-[11px] text-gray-400 mt-1">Counter-trend retest pada major demand support.</p>
+                        </div>
+
+                        <div class="border border-yellow-500/30 bg-yellow-950/10 p-3">
+                            <h4 class="font-bold text-yellow-400 mb-2">SCENARIO C (WAIT)</h4>
+                            <p><strong>Kondisi Eksekusi:</strong></p>
+                            <p>Menunggu retest sempurna ke $4,216.50 ATAU konfirmasi breakdown support $4,175.00 dengan volume tinggi sebelum membuka order lanjutan.</p>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- 9 & 10. Priority & Safety Checks -->
+                <div class="bg-black/60 border border-cyan-900/60 p-4">
+                    <h3 class="text-cyan-400 font-bold cyber-font text-xs uppercase mb-3 flex items-center gap-2">
+                        <span class="text-yellow-400">09.</span> ENTRY PRIORITY
+                    </h3>
+                    <p class="text-xs text-cyan-100 mb-2"><strong>1st Priority:</strong> Scenario B (SELL LIMIT di $4,216.50)</p>
+                    <p class="text-xs text-cyan-100 mb-2"><strong>2nd Priority:</strong> Scenario C (WAIT Konfirmasi)</p>
+                    <p class="text-xs text-cyan-100 mb-3"><strong>3rd Priority:</strong> Scenario A (BUY LIMIT di $4,148.00)</p>
+                    <div class="bg-cyan-950/50 p-2.5 border-l-2 border-yellow-400 text-xs text-yellow-300">
+                        "Jika hanya boleh memilih 1 setup: <strong>SCENARIO B (SELL LIMIT di $4,216.50)</strong> adalah setup paling rasional secara matematis dan institusional."
+                    </div>
+                </div>
+
+                <div class="bg-black/60 border border-cyan-900/60 p-4">
+                    <h3 class="text-cyan-400 font-bold cyber-font text-xs uppercase mb-3 flex items-center gap-2">
+                        <span class="text-yellow-400">10.</span> PENDING ORDER SAFETY
+                    </h3>
+                    <ul class="space-y-1.5 text-xs text-cyan-100/90 mb-3">
+                        <li>• Jarak harga saat ini ($4,180.80) ke entry zone ($4,216.50) adalah ~357 pips (aman dari noise).</li>
+                        <li>• SL di $4,228.00 terlindungi di atas level 0.786 Fibonacci.</li>
+                        <li>• Menjelang high-impact news AS, jika terjadi candle breakout tanpa rejection, segera batalkan pending order.</li>
+                    </ul>
+                    <div class="bg-green-950/40 p-2 border border-green-500/50 text-center font-bold text-green-400 text-xs">
+                        STATUS: SAFE TO PLACE PENDING ORDER (SELL LIMIT)
+                    </div>
+                </div>
+
+                <!-- 11. Final Summary Table -->
+                <div class="bg-black/60 border border-cyan-500/60 p-4 lg:col-span-2">
+                    <h3 class="text-cyan-400 font-bold cyber-font text-xs uppercase mb-3 flex items-center gap-2">
+                        <span class="text-yellow-400">11.</span> OUTPUT AKHIR (PARAMETER EKSEKUSI)
+                    </h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse text-xs text-cyan-100 min-w-[650px] font-mono">
+                            <thead>
+                                <tr class="bg-cyan-950/80 border-b border-cyan-700 text-cyan-400 uppercase text-[11px]">
+                                    <th class="p-2.5">Setup</th>
+                                    <th class="p-2.5">Entry Terbaik</th>
+                                    <th class="p-2.5">Stop Loss</th>
+                                    <th class="p-2.5">TP 1</th>
+                                    <th class="p-2.5">TP 2 (Target)</th>
+                                    <th class="p-2.5">TP 3</th>
+                                    <th class="p-2.5">R : R</th>
+                                    <th class="p-2.5">Confidence</th>
+                                    <th class="p-2.5">Invalidation</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="bg-red-950/20 border-b border-cyan-900/40 font-bold">
+                                    <td class="p-2.5 neon-text-red">SELL LIMIT (Main)</td>
+                                    <td class="p-2.5 neon-text-yellow">$4,216.50</td>
+                                    <td class="p-2.5 text-red-400">$4,228.00</td>
+                                    <td class="p-2.5 text-green-400">$4,195.00</td>
+                                    <td class="p-2.5 neon-text-green">$4,178.00</td>
+                                    <td class="p-2.5 text-green-400">$4,150.00</td>
+                                    <td class="p-2.5 text-cyan-300">1 : 3.35</td>
+                                    <td class="p-2.5 text-yellow-400">8.5 / 10</td>
+                                    <td class="p-2.5 text-slate-400">H1 Close > $4,228.00</td>
+                                </tr>
+                                <tr class="bg-cyan-950/10 border-b border-cyan-900/40">
+                                    <td class="p-2.5 text-green-400">BUY LIMIT (Demand)</td>
+                                    <td class="p-2.5 text-cyan-300">$4,148.00</td>
+                                    <td class="p-2.5 text-red-400">$4,136.00</td>
+                                    <td class="p-2.5 text-green-400">$4,165.00</td>
+                                    <td class="p-2.5 text-green-400">$4,185.00</td>
+                                    <td class="p-2.5 text-green-400">$4,210.00</td>
+                                    <td class="p-2.5 text-cyan-300">1 : 2.50</td>
+                                    <td class="p-2.5 text-gray-400">6.0 / 10</td>
+                                    <td class="p-2.5 text-slate-400">H4 Close < $4,135.00</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
     <footer class="mt-12 text-center text-cyan-700 text-xs pb-8 cyber-font tracking-widest relative z-10">
         SYSTEM_VER: <span id="system-ver">DAY 1</span> // BLACKBOX NEURAL NETWORK // UNAUTHORIZED ACCESS PROHIBITED
     </footer>
 
+    <!-- Scripts Section -->
     <script src="data.js?v=20261013"></script>
     <script>
-        // Fallback in case external script is blocked or cached
-        if (typeof tradeData === 'undefined') {
-            window.tradeData = {
-                "last_update": "13 OCT 2026",
-                "winrate": "0.0%",
-                "total_trades": "0",
-                "pips_gained": "0",
-                "profit_factor": "0.0",
-                "signal": {
-                    "type": "SELL LIMIT",
-                    "entry": "$4,216.50",
-                    "sl": "$4,228.00",
-                    "tp": "$4,178.00",
-                    "confidence": "8.5/10"
+        let neuralChart = null;
+        let candleSeries = null;
+        let tvWidgetInstance = null;
+
+        function switchChartMode(mode) {
+            const neuralWrapper = document.getElementById('neural_chart_wrapper');
+            const tvWrapper = document.getElementById('tradingview_chart_wrapper');
+            const btnNeural = document.getElementById('btn-neural-chart');
+            const btnTv = document.getElementById('btn-tv-chart');
+
+            if (mode === 'neural') {
+                neuralWrapper.classList.remove('hidden');
+                tvWrapper.classList.add('hidden');
+                btnNeural.className = "chart-tab-active px-2.5 py-1 text-xs cyber-font font-bold border border-cyan-400 cursor-pointer";
+                btnTv.className = "px-2.5 py-1 text-xs cyber-font font-bold bg-black/60 text-cyan-400 border border-cyan-800 hover:border-cyan-400 cursor-pointer";
+                if (neuralChart) {
+                    neuralChart.applyOptions({
+                        width: neuralWrapper.clientWidth,
+                        height: neuralWrapper.clientHeight
+                    });
+                    neuralChart.timeScale().fitContent();
+                }
+            } else {
+                neuralWrapper.classList.add('hidden');
+                tvWrapper.classList.remove('hidden');
+                btnTv.className = "chart-tab-active px-2.5 py-1 text-xs cyber-font font-bold border border-cyan-400 cursor-pointer";
+                btnNeural.className = "px-2.5 py-1 text-xs cyber-font font-bold bg-black/60 text-cyan-400 border border-cyan-800 hover:border-cyan-400 cursor-pointer";
+                
+                // Initialize TV widget on demand if needed
+                if (!tvWidgetInstance && typeof TradingView !== 'undefined') {
+                    tvWidgetInstance = new TradingView.widget({
+                        "autosize": true,
+                        "symbol": "OANDA:XAUUSD",
+                        "interval": "60",
+                        "timezone": "Asia/Jakarta",
+                        "theme": "dark",
+                        "style": "1",
+                        "locale": "id",
+                        "enable_publishing": false,
+                        "backgroundColor": "#000000",
+                        "gridColor": "rgba(6, 182, 212, 0.1)",
+                        "hide_top_toolbar": false,
+                        "hide_legend": false,
+                        "save_image": false,
+                        "container_id": "tradingview_xauusd"
+                    });
+                }
+            }
+        }
+
+        function initNeuralChart() {
+            const container = document.getElementById('neural_chart_view');
+            if (!container || typeof LightweightCharts === 'undefined') return;
+
+            neuralChart = LightweightCharts.createChart(container, {
+                width: container.clientWidth,
+                height: container.clientHeight,
+                layout: {
+                    background: { color: '#03070a' },
+                    textColor: '#67e8f9',
+                    fontFamily: 'Rajdhani, monospace',
                 },
-                "macro": {
-                    "dxy": "DXY kokoh di 102.57 & Yield US 10Y stabil di 5.24%. Suku bunga elevasi menekan aset non-yielding emas.",
-                    "geopolitics": "Retail sentiment 74% Long di OANDA/IG. Smart Money bersiap sweep liquidity buyer ritel menuju target $4,178."
+                grid: {
+                    vertLines: { color: 'rgba(6, 182, 212, 0.08)' },
+                    horzLines: { color: 'rgba(6, 182, 212, 0.08)' },
                 },
-                "history": [
+                crosshair: {
+                    mode: LightweightCharts.CrosshairMode.Normal,
+                    vertLine: { color: '#06b6d4', width: 1, style: LightweightCharts.LineStyle.Dashed },
+                    horzLine: { color: '#06b6d4', width: 1, style: LightweightCharts.LineStyle.Dashed },
+                },
+                rightPriceScale: {
+                    borderColor: 'rgba(6, 182, 212, 0.3)',
+                    scaleMargins: { top: 0.1, bottom: 0.15 },
+                },
+                timeScale: {
+                    borderColor: 'rgba(6, 182, 212, 0.3)',
+                    timeVisible: true,
+                    secondsVisible: false,
+                },
+            });
+
+            candleSeries = neuralChart.addCandlestickSeries({
+                upColor: '#22c55e',
+                downColor: '#ef4444',
+                borderDownColor: '#ef4444',
+                borderUpColor: '#22c55e',
+                wickDownColor: '#ef4444',
+                wickUpColor: '#22c55e',
+            });
+
+            if (window.tradeData && window.tradeData.candles && window.tradeData.candles.length > 0) {
+                candleSeries.setData(window.tradeData.candles);
+
+                // --- 1. STOP LOSS LINE ---
+                candleSeries.createPriceLine({
+                    price: 4228.00,
+                    color: '#ef4444',
+                    lineWidth: 2,
+                    lineStyle: LightweightCharts.LineStyle.Dashed,
+                    axisLabelVisible: true,
+                    title: 'STOP LOSS ($4,228.00)',
+                });
+
+                // --- 2. SELL LIMIT ENTRY (0.618 FIB) ---
+                candleSeries.createPriceLine({
+                    price: 4216.50,
+                    color: '#eab308',
+                    lineWidth: 2,
+                    lineStyle: LightweightCharts.LineStyle.Solid,
+                    axisLabelVisible: true,
+                    title: 'SELL LIMIT ENTRY ($4,216.50 - 0.618 Fib)',
+                });
+
+                // --- 3. FIBONACCI 0.500 RETEST ---
+                candleSeries.createPriceLine({
+                    price: 4208.95,
+                    color: '#06b6d4',
+                    lineWidth: 1,
+                    lineStyle: LightweightCharts.LineStyle.Dotted,
+                    axisLabelVisible: true,
+                    title: 'FIB 0.500 ($4,208.95)',
+                });
+
+                // --- 4. FIBONACCI 0.382 ---
+                candleSeries.createPriceLine({
+                    price: 4201.08,
+                    color: '#a855f7',
+                    lineWidth: 1,
+                    lineStyle: LightweightCharts.LineStyle.Dotted,
+                    axisLabelVisible: false,
+                    title: 'FIB 0.382 ($4,201.08)',
+                });
+
+                // --- 5. TAKE PROFIT 1 ---
+                candleSeries.createPriceLine({
+                    price: 4195.00,
+                    color: '#34d399',
+                    lineWidth: 1,
+                    lineStyle: LightweightCharts.LineStyle.Dashed,
+                    axisLabelVisible: true,
+                    title: 'TP 1 ($4,195.00)',
+                });
+
+                // --- 6. TAKE PROFIT 2 (MAIN TARGET) ---
+                candleSeries.createPriceLine({
+                    price: 4178.00,
+                    color: '#22c55e',
+                    lineWidth: 2,
+                    lineStyle: LightweightCharts.LineStyle.Solid,
+                    axisLabelVisible: true,
+                    title: 'TP 2 TARGET ($4,178.00)',
+                });
+
+                // --- 7. TAKE PROFIT 3 (LIQUIDITY SWEEP) ---
+                candleSeries.createPriceLine({
+                    price: 4150.00,
+                    color: '#059669',
+                    lineWidth: 1,
+                    lineStyle: LightweightCharts.LineStyle.Dashed,
+                    axisLabelVisible: true,
+                    title: 'TP 3 ($4,150.00)',
+                });
+
+                // Add Analysis Markers
+                const candles = window.tradeData.candles;
+                const highCandle = candles.reduce((max, c) => c.high > max.high ? c : max, candles[0]);
+                const lowCandle = candles.reduce((min, c) => c.low < min.low ? c : min, candles[0]);
+                const lastCandle = candles[candles.length - 1];
+
+                candleSeries.setMarkers([
                     {
-                        "date": "13 OCT 26",
-                        "type": "SELL",
-                        "entry": "$4,216.50",
-                        "tp": "$4,178.00",
-                        "sl": "$4,228.00",
-                        "status": "PENDING",
-                        "result": "_ _ _ _"
+                        time: highCandle.time,
+                        position: 'aboveBar',
+                        color: '#f43f5e',
+                        shape: 'arrowDown',
+                        text: 'SWING HIGH 4242.30 [LIQUIDITY SWEEP]',
                     },
                     {
-                        "date": "12 OCT 26",
-                        "type": "SELL",
-                        "entry": "$4,181.50",
-                        "tp": "$4,146.00",
-                        "sl": "$4,192.00",
-                        "status": "PENDING",
-                        "result": "_ _ _ _"
+                        time: lowCandle.time,
+                        position: 'belowBar',
+                        color: '#06b6d4',
+                        shape: 'arrowUp',
+                        text: 'SWING LOW 4175.60 [1H BOS]',
                     },
                     {
-                        "date": "08 OCT 26",
-                        "type": "SELL",
-                        "entry": "$4,127.00",
-                        "tp": "$4,115.00",
-                        "sl": "$4,137.00",
-                        "status": "PENDING",
-                        "result": "_ _ _ _"
-                    },
-                    {
-                        "date": "7 OCT 26",
-                        "type": "SELL",
-                        "entry": "$4,150.00",
-                        "tp": "$4,110.00",
-                        "sl": "$4,165.00",
-                        "status": "PENDING",
-                        "result": "_ _ _ _"
+                        time: lastCandle.time,
+                        position: 'aboveBar',
+                        color: '#eab308',
+                        shape: 'circle',
+                        text: 'ACTIVE SETUP: SELL LIMIT @ $4216.50',
                     }
-                ]
-            };
+                ]);
+
+                neuralChart.timeScale().fitContent();
+            }
+
+            window.addEventListener('resize', () => {
+                if (neuralChart && container) {
+                    neuralChart.applyOptions({
+                        width: container.clientWidth,
+                        height: container.clientHeight
+                    });
+                }
+            });
         }
 
         document.addEventListener("DOMContentLoaded", () => {
+            initNeuralChart();
+
             if (typeof tradeData !== 'undefined') {
                 document.getElementById('ai-update-time').innerText = tradeData.last_update + " // ONLINE";
                 document.getElementById('stat-winrate').innerText = tradeData.winrate;
