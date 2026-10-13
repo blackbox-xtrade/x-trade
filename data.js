@@ -1,32 +1,44 @@
 // data.js
 const tradeData = {
-    "last_update": "13 OCT 2026",
+    "last_update": "13 OCT 2026 // 21:20 UTC",
     "winrate": "0.0%",
     "total_trades": "0",
     "pips_gained": "0",
     "profit_factor": "0.0",
     "signal": {
-        "type": "SELL LIMIT",
-        "entry": "$4,216.50",
-        "sl": "$4,228.00",
-        "tp": "$4,178.00",
-        "confidence": "8.5/10"
+        "type": "SELL (RETEST) / SELL LIMIT",
+        "entry": "$4,185.00",
+        "sl": "$4,196.00",
+        "tp": "$4,150.00",
+        "confidence": "8.8/10"
     },
     "macro": {
-        "dxy": "DXY kokoh di 102.57 & Yield US 10Y stabil di 5.24%. Suku bunga elevasi menekan aset non-yielding emas.",
-        "geopolitics": "Retail sentiment 74% Long di OANDA/IG. Smart Money bersiap sweep liquidity buyer ritel menuju target $4,178."
+        "dxy": "DXY kokoh di 102.60 & Yield US 10Y di 5.24%. Sikap hawkish The Fed jelang FOMC Minutes menekan emas.",
+        "geopolitics": "Support $4,175.60 jebol ke $4,162.10. Retail trapped 76% Long. Smart Money menargetkan demand zone $4,150."
     },
     "history": [
         {
-            "date": "13 OCT 26",
+            "id": "2026-10-13-live",
+            "date": "13 OCT 26 (LIVE)",
+            "type": "SELL (Retest)",
+            "entry": "$4,185.00",
+            "tp": "$4,150.00",
+            "sl": "$4,196.00",
+            "status": "PENDING",
+            "result": "WAIT RETEST"
+        },
+        {
+            "id": "2026-10-13-morning",
+            "date": "13 OCT 26 (OVERLAP)",
             "type": "SELL",
             "entry": "$4,216.50",
             "tp": "$4,178.00",
             "sl": "$4,228.00",
             "status": "PENDING",
-            "result": "_ _ _ _"
+            "result": "PULLBACK TO $4162"
         },
         {
+            "id": "2026-10-12",
             "date": "12 OCT 26",
             "type": "SELL",
             "entry": "$4,181.50",
@@ -36,6 +48,7 @@ const tradeData = {
             "result": "_ _ _ _"
         },
         {
+            "id": "2026-10-08",
             "date": "08 OCT 26",
             "type": "SELL",
             "entry": "$4,127.00",
@@ -45,7 +58,8 @@ const tradeData = {
             "result": "_ _ _ _"
         },
         {
-            "date": "7 OCT 26",
+            "id": "2026-10-07",
+            "date": "07 OCT 26",
             "type": "SELL",
             "entry": "$4,150.00",
             "tp": "$4,110.00",
@@ -55,16 +69,16 @@ const tradeData = {
         }
     ],
     "chart_levels": {
-        "sl": 4228.0,
-        "entry": 4216.5,
-        "tp1": 4195.0,
-        "tp2": 4178.0,
-        "tp3": 4150.0,
-        "fib_0618": 4216.82,
-        "fib_0500": 4208.95,
-        "fib_0382": 4201.08,
+        "sl": 4196.0,
+        "entry": 4185.0,
+        "tp1": 4162.0,
+        "tp2": 4150.0,
+        "tp3": 4120.0,
+        "fib_0618": 4210.86,
+        "fib_0500": 4201.15,
+        "fib_0382": 4191.44,
         "swing_high": 4242.3,
-        "swing_low": 4175.6
+        "swing_low": 4160.0
     },
     "candles": [
         {
@@ -703,104 +717,553 @@ const tradeData = {
             "high": 4178.7,
             "low": 4178.7,
             "close": 4178.7
+        },
+        {
+            "time": 1791868500,
+            "open": 4178.7,
+            "high": 4179.5,
+            "low": 4160.0,
+            "close": 4162.1
         }
     ],
     "full_report": {
+        "id": "2026-10-13-live",
+        "date": "13 OCT 2026",
+        "time": "21:15 UTC",
+        "session_label": "13 OCT 2026 // NY SESSION [LIVE $4,162.10]",
+        "status_badge": "LIVE TICK (LATEST)",
+        "market_price": "$4,162.10",
         "market_news": {
-            "xauusd_current": "$4,180.80",
-            "dxy": "102.49 - 102.57 (Kokoh / Strong)",
+            "xauusd_current": "$4,162.10",
+            "dxy": "102.55 - 102.60 (Kokoh / Strong)",
             "us10y": "5.24% (Elevated / Hawkish rate environment)",
-            "geopolitics": "Eskalasi Timur Tengah memicu reli minyak mentah; dampak kenaikan harga energi memicu kekhawatiran sticky inflation dan ekspektasi Fed higher-for-longer.",
-            "fomc_macro": "Pasar telah mem-priced-in sikap The Fed yang tetap waspada menjelang FOMC Minutes.",
-            "fundamental_conclusion": "Bearish Pressure / Netral-Bearish",
-            "news_hours": "Sesi London 14:00 - 16:30 WIB | Sesi New York 19:30 & 21:00 WIB"
+            "geopolitics": "Eskalasi minyak mentah memicu kekhawatiran sticky inflation; The Fed diproyeksikan higher-for-longer. Likuiditas pasar beralih menguatkan US Dollar kas.",
+            "fomc_macro": "Pasar telah mem-priced-in sikap waspada The Fed jelang rilis FOMC Minutes; tekanan terhadap aset tanpa bunga berlanjut.",
+            "fundamental_conclusion": "BEARISH DOMINANT",
+            "news_hours": "Sesi New York aktif 19:30 - 23:00 WIB"
         },
         "sentiment_liquidity": {
-            "retail_sentiment": "74% Long vs 26% Short (OANDA/IG/Myfxbook)",
-            "institutional_cot": "Smart Money Net Short pada rally swing / penyedia likuiditas",
-            "stop_loss_clusters": "Buy Stops di $4,215 - $4,222; Sell Stops ritel di bawah $4,175.00 - $4,150.00"
+            "retail_sentiment": "76% Long vs 24% Short (OANDA/IG/Myfxbook)",
+            "retail_long_pct": 76,
+            "sentiment_note": "Penurunan ke $4,162.10 melikuidasi massal posisi buyer ritel yang masuk di atas $4,175.",
+            "institutional_cot": "Smart Money mendistribusikan suplai dan menyerap likuiditas sell-stops ritel di bawah $4,175.",
+            "stop_loss_clusters": "Sell stops di bawah $4,175.00 telah tersapu; target likuiditas berikutnya di $4,145 - $4,150."
         },
         "mtf_analysis": {
-            "tf_1d": "Trend makro bullish, sedang fase healthy pullback pasca rejection di $4,242.30",
-            "tf_4h": "Lower High terbentuk di $4,242.30, menguji support likuiditas $4,175.60",
-            "tf_1h": "Bearish Structure dengan BOS di bawah $4,195.00. Current price $4,180.80",
-            "tf_15m": "Bearish compression di bawah dynamic resistance EMA 55",
-            "levels": "R1: $4,208.00 | R2: $4,216.50 | R3: $4,228.00 | S1: $4,175.60 | S2: $4,150.00 | S3: $4,110.00"
+            "tf_1d": "Trend makro bullish, sedang fase deep correction pasca rejection tajam di $4,242.30.",
+            "tf_4h": "Lower High terbentuk di $4,242.30; Lower Low baru dicetak menembus low $4,175.60 ke $4,162.10.",
+            "tf_1h": "Bearish Trend Expansion dengan BOS lanjutan di bawah $4,175.00. Area $4,175 - $4,185 menjadi S/R Flip Zone.",
+            "tf_15m": "Bearish cascade di bawah dynamic resistance MA 8 & EMA 55.",
+            "levels": "R1: $4,175.60 | R2: $4,188.00 | R3: $4,210.00 | S1: $4,150.00 | S2: $4,145.00 | S3: $4,110.00"
         },
         "fibonacci": {
             "swing_high": "$4,242.30",
-            "swing_low": "$4,175.60",
-            "fib_0382": "$4,201.08",
-            "fib_0500": "$4,208.95",
-            "fib_0618": "$4,216.82 (Golden Pocket - Confluence Entry)",
-            "fib_0786": "$4,228.03 (Batas Invalidasi / SL)",
-            "fib_0886": "$4,234.70",
-            "confluence": "Area $4,216.50 - $4,217.00 bertepatan dengan 0.618 Fib + 1H Bearish Order Block"
+            "swing_low": "$4,160.00",
+            "fib_0382": "$4,191.44",
+            "fib_0500": "$4,201.15",
+            "fib_0618": "$4,210.86",
+            "fib_0786": "$4,224.70",
+            "fib_0886": "$4,232.90",
+            "confluence": "Area $4,185.00 - $4,191.00 menyatukan 0.382 Fib Retracement dengan zona bekas support 1H yang jebol (Flip Zone)."
         },
         "ma_indicators": {
-            "tf_1h": "MA 8 ($4,189.00) di bawah EMA 55 ($4,192.60) - Bearish Cross, slope menurun",
-            "tf_15m": "MA 8 ($4,183.81) di bawah EMA 55 ($4,193.28) - Rejection dinamis konsisten"
+            "tf_1h": "MA 8 ($4,182.00) di bawah EMA 55 ($4,192.60) - Bearish Fan Alignment, kemiringan curam.",
+            "tf_15m": "MA 8 ($4,168.00) di bawah EMA 55 ($4,185.00) - Konsisten menolak setiap koreksi naik."
         },
         "patterns": {
-            "pattern": "Bear Flag / Retracement Channel (1H) + Liquidity Sweep di $4,242.30",
-            "validation": "BOS terkonfirmasi di TF 1H dengan candle close di bawah $4,195.00",
-            "invalidation": "Candle H1 / H4 close di atas $4,228.00"
+            "pattern": "Bearish Breakdown & S/R Flip Continuation (1H) + Sweep Asian Lows ($4,175.60)",
+            "validation": "Penutupan candle H1 solid di bawah $4,175.00",
+            "invalidation": "Candle H1 close kembali menembus ke atas $4,195.00"
         },
         "bias_scoring": {
-            "htf_bias": "Neutral-Bearish (Pullback)",
-            "h1_bias": "Bearish",
-            "m15_bias": "Bearish",
-            "buy_score": "3.5 / 10",
-            "sell_score": "8.5 / 10"
+            "htf_bias": "Neutral-Bearish",
+            "h1_bias": "Bearish Kuat",
+            "m15_bias": "Bearish Kuat",
+            "buy_score": "2.5 / 10",
+            "sell_score": "9.0 / 10"
         },
         "scenarios": {
+            "scenario_b": {
+                "name": "SELL LIMIT (Retest Supply - Primary)",
+                "entry_zone": "$4,182.00 - $4,188.00",
+                "ideal_entry": "$4,185.00",
+                "sl": "$4,196.00",
+                "tp1": "$4,162.00",
+                "tp2": "$4,150.00",
+                "tp3": "$4,120.00",
+                "rr": "1 : 3.18 (ke TP2) / 1 : 5.90 (ke TP3)",
+                "invalidation": "Candle H1 close di atas $4,196.00",
+                "reason": "Retest Flip Zone S/R + 0.382 Fib pasca breakdown $4,175.60"
+            },
             "scenario_a": {
-                "name": "BUY LIMIT (Counter-trend)",
+                "name": "BUY LIMIT (Major Institutional Demand)",
                 "entry_zone": "$4,145.00 - $4,150.00",
                 "ideal_entry": "$4,148.00",
                 "sl": "$4,136.00",
                 "tp1": "$4,165.00",
                 "tp2": "$4,185.00",
                 "tp3": "$4,210.00",
-                "rr": "1 : 2.50+",
-                "invalidation": "H4 close di bawah $4,135.00"
+                "rr": "1 : 3.08",
+                "invalidation": "Candle H4 close di bawah $4,135.00",
+                "reason": "Area demand harian mayor + antisipasi exhaustion wick"
             },
-            "scenario_b": {
-                "name": "SELL LIMIT (Primary Setup)",
-                "entry_zone": "$4,214.00 - $4,218.00",
-                "ideal_entry": "$4,216.50",
+            "scenario_c": {
+                "name": "WAIT (Retest Confirmation)",
+                "condition": "DILARANG OPEN MARKET ORDER DI $4,162.10! Tunggu retest ke $4,185.00 untuk Sell atau pantau reaksi buyer di $4,148.00."
+            }
+        },
+        "entry_priority": {
+            "first": "Scenario C (WAIT Konfirmasi Retest)",
+            "second": "Scenario B (SELL LIMIT di $4,185.00)",
+            "third": "Scenario A (BUY LIMIT di $4,148.00)",
+            "verdict": "Jika hanya boleh 1 setup eksekusi: SCENARIO B (SELL LIMIT di $4,185.00 saat retest) paling rasional secara struktur."
+        },
+        "pending_order_safety": {
+            "distance": "+229 pips ke Sell Limit ($4,185.00) | -141 pips ke Buy Limit ($4,148.00)",
+            "status": "WAIT / SAFE FOR PENDING ORDER ONLY (Tidak aman untuk market execution)"
+        },
+        "final_table": {
+            "direction": "SELL (Tunggu Retest)",
+            "entry": "$4,185.00",
+            "sl": "$4,196.00",
+            "tp1": "$4,162.00",
+            "tp2": "$4,150.00",
+            "tp3": "$4,120.00",
+            "rr": "1 : 3.18",
+            "confidence": "8.8 / 10",
+            "invalidation": "Candle H1 close di atas $4,196.00"
+        }
+    },
+    "reports": [
+        {
+            "id": "2026-10-13-live",
+            "date": "13 OCT 2026",
+            "time": "21:15 UTC",
+            "session_label": "13 OCT 2026 // NY SESSION [LIVE $4,162.10]",
+            "status_badge": "LIVE TICK (LATEST)",
+            "market_price": "$4,162.10",
+            "market_news": {
+                "xauusd_current": "$4,162.10",
+                "dxy": "102.55 - 102.60 (Kokoh / Strong)",
+                "us10y": "5.24% (Elevated / Hawkish rate environment)",
+                "geopolitics": "Eskalasi minyak mentah memicu kekhawatiran sticky inflation; The Fed diproyeksikan higher-for-longer. Likuiditas pasar beralih menguatkan US Dollar kas.",
+                "fomc_macro": "Pasar telah mem-priced-in sikap waspada The Fed jelang rilis FOMC Minutes; tekanan terhadap aset tanpa bunga berlanjut.",
+                "fundamental_conclusion": "BEARISH DOMINANT",
+                "news_hours": "Sesi New York aktif 19:30 - 23:00 WIB"
+            },
+            "sentiment_liquidity": {
+                "retail_sentiment": "76% Long vs 24% Short (OANDA/IG/Myfxbook)",
+                "retail_long_pct": 76,
+                "sentiment_note": "Penurunan ke $4,162.10 melikuidasi massal posisi buyer ritel yang masuk di atas $4,175.",
+                "institutional_cot": "Smart Money mendistribusikan suplai dan menyerap likuiditas sell-stops ritel di bawah $4,175.",
+                "stop_loss_clusters": "Sell stops di bawah $4,175.00 telah tersapu; target likuiditas berikutnya di $4,145 - $4,150."
+            },
+            "mtf_analysis": {
+                "tf_1d": "Trend makro bullish, sedang fase deep correction pasca rejection tajam di $4,242.30.",
+                "tf_4h": "Lower High terbentuk di $4,242.30; Lower Low baru dicetak menembus low $4,175.60 ke $4,162.10.",
+                "tf_1h": "Bearish Trend Expansion dengan BOS lanjutan di bawah $4,175.00. Area $4,175 - $4,185 menjadi S/R Flip Zone.",
+                "tf_15m": "Bearish cascade di bawah dynamic resistance MA 8 & EMA 55.",
+                "levels": "R1: $4,175.60 | R2: $4,188.00 | R3: $4,210.00 | S1: $4,150.00 | S2: $4,145.00 | S3: $4,110.00"
+            },
+            "fibonacci": {
+                "swing_high": "$4,242.30",
+                "swing_low": "$4,160.00",
+                "fib_0382": "$4,191.44",
+                "fib_0500": "$4,201.15",
+                "fib_0618": "$4,210.86",
+                "fib_0786": "$4,224.70",
+                "fib_0886": "$4,232.90",
+                "confluence": "Area $4,185.00 - $4,191.00 menyatukan 0.382 Fib Retracement dengan zona bekas support 1H yang jebol (Flip Zone)."
+            },
+            "ma_indicators": {
+                "tf_1h": "MA 8 ($4,182.00) di bawah EMA 55 ($4,192.60) - Bearish Fan Alignment, kemiringan curam.",
+                "tf_15m": "MA 8 ($4,168.00) di bawah EMA 55 ($4,185.00) - Konsisten menolak setiap koreksi naik."
+            },
+            "patterns": {
+                "pattern": "Bearish Breakdown & S/R Flip Continuation (1H) + Sweep Asian Lows ($4,175.60)",
+                "validation": "Penutupan candle H1 solid di bawah $4,175.00",
+                "invalidation": "Candle H1 close kembali menembus ke atas $4,195.00"
+            },
+            "bias_scoring": {
+                "htf_bias": "Neutral-Bearish",
+                "h1_bias": "Bearish Kuat",
+                "m15_bias": "Bearish Kuat",
+                "buy_score": "2.5 / 10",
+                "sell_score": "9.0 / 10"
+            },
+            "scenarios": {
+                "scenario_b": {
+                    "name": "SELL LIMIT (Retest Supply - Primary)",
+                    "entry_zone": "$4,182.00 - $4,188.00",
+                    "ideal_entry": "$4,185.00",
+                    "sl": "$4,196.00",
+                    "tp1": "$4,162.00",
+                    "tp2": "$4,150.00",
+                    "tp3": "$4,120.00",
+                    "rr": "1 : 3.18 (ke TP2) / 1 : 5.90 (ke TP3)",
+                    "invalidation": "Candle H1 close di atas $4,196.00",
+                    "reason": "Retest Flip Zone S/R + 0.382 Fib pasca breakdown $4,175.60"
+                },
+                "scenario_a": {
+                    "name": "BUY LIMIT (Major Institutional Demand)",
+                    "entry_zone": "$4,145.00 - $4,150.00",
+                    "ideal_entry": "$4,148.00",
+                    "sl": "$4,136.00",
+                    "tp1": "$4,165.00",
+                    "tp2": "$4,185.00",
+                    "tp3": "$4,210.00",
+                    "rr": "1 : 3.08",
+                    "invalidation": "Candle H4 close di bawah $4,135.00",
+                    "reason": "Area demand harian mayor + antisipasi exhaustion wick"
+                },
+                "scenario_c": {
+                    "name": "WAIT (Retest Confirmation)",
+                    "condition": "DILARANG OPEN MARKET ORDER DI $4,162.10! Tunggu retest ke $4,185.00 untuk Sell atau pantau reaksi buyer di $4,148.00."
+                }
+            },
+            "entry_priority": {
+                "first": "Scenario C (WAIT Konfirmasi Retest)",
+                "second": "Scenario B (SELL LIMIT di $4,185.00)",
+                "third": "Scenario A (BUY LIMIT di $4,148.00)",
+                "verdict": "Jika hanya boleh 1 setup eksekusi: SCENARIO B (SELL LIMIT di $4,185.00 saat retest) paling rasional secara struktur."
+            },
+            "pending_order_safety": {
+                "distance": "+229 pips ke Sell Limit ($4,185.00) | -141 pips ke Buy Limit ($4,148.00)",
+                "status": "WAIT / SAFE FOR PENDING ORDER ONLY (Tidak aman untuk market execution)"
+            },
+            "final_table": {
+                "direction": "SELL (Tunggu Retest)",
+                "entry": "$4,185.00",
+                "sl": "$4,196.00",
+                "tp1": "$4,162.00",
+                "tp2": "$4,150.00",
+                "tp3": "$4,120.00",
+                "rr": "1 : 3.18",
+                "confidence": "8.8 / 10",
+                "invalidation": "Candle H1 close di atas $4,196.00"
+            }
+        },
+        {
+            "id": "2026-10-13-morning",
+            "date": "13 OCT 2026",
+            "time": "08:45 UTC",
+            "session_label": "13 OCT 2026 // NY-LONDON OVERLAP [$4,180.80]",
+            "status_badge": "ARCHIVED",
+            "market_price": "$4,180.80",
+            "market_news": {
+                "xauusd_current": "$4,180.80",
+                "dxy": "102.49 - 102.57 (Kokoh / Strong)",
+                "us10y": "5.24% (Elevated / Hawkish rate environment)",
+                "geopolitics": "Eskalasi Timur Tengah memicu reli minyak mentah; dampak kenaikan harga energi memicu kekhawatiran sticky inflation dan ekspektasi Fed higher-for-longer.",
+                "fomc_macro": "Pasar telah mem-priced-in sikap The Fed yang tetap waspada menjelang FOMC Minutes.",
+                "fundamental_conclusion": "Bearish Pressure / Netral-Bearish",
+                "news_hours": "Sesi London 14:00 - 16:30 WIB | Sesi New York 19:30 & 21:00 WIB"
+            },
+            "sentiment_liquidity": {
+                "retail_sentiment": "74% Long vs 26% Short (OANDA/IG/Myfxbook)",
+                "retail_long_pct": 74,
+                "sentiment_note": "Ekstremitas Long ritel membuka peluang Smart Money melikuidasi posisi buyer ke bawah.",
+                "institutional_cot": "Smart Money Net Short pada rally swing / penyedia likuiditas.",
+                "stop_loss_clusters": "Buy Stops di $4,215 - $4,222; Sell Stops ritel di bawah $4,175.00 - $4,150.00."
+            },
+            "mtf_analysis": {
+                "tf_1d": "Trend makro bullish, sedang fase healthy pullback pasca rejection di $4,242.30",
+                "tf_4h": "Lower High terbentuk di $4,242.30, menguji support likuiditas $4,175.60",
+                "tf_1h": "Bearish Structure dengan BOS di bawah $4,195.00. Current price $4,180.80",
+                "tf_15m": "Bearish compression di bawah dynamic resistance EMA 55",
+                "levels": "R1: $4,208.00 | R2: $4,216.50 | R3: $4,228.00 | S1: $4,175.60 | S2: $4,150.00 | S3: $4,110.00"
+            },
+            "fibonacci": {
+                "swing_high": "$4,242.30",
+                "swing_low": "$4,175.60",
+                "fib_0382": "$4,201.08",
+                "fib_0500": "$4,208.95",
+                "fib_0618": "$4,216.82 (Golden Pocket - Confluence Entry)",
+                "fib_0786": "$4,228.03 (Batas Invalidasi / SL)",
+                "fib_0886": "$4,234.70",
+                "confluence": "Area $4,216.50 - $4,217.00 bertepatan dengan 0.618 Fib + 1H Bearish Order Block"
+            },
+            "ma_indicators": {
+                "tf_1h": "MA 8 ($4,189.00) di bawah EMA 55 ($4,192.60) - Bearish Cross, slope menurun",
+                "tf_15m": "MA 8 ($4,183.81) di bawah EMA 55 ($4,193.28) - Rejection dinamis konsisten"
+            },
+            "patterns": {
+                "pattern": "Bear Flag / Retracement Channel (1H) + Liquidity Sweep di $4,242.30",
+                "validation": "BOS terkonfirmasi di TF 1H dengan candle close di bawah $4,195.00",
+                "invalidation": "Candle H1 / H4 close di atas $4,228.00"
+            },
+            "bias_scoring": {
+                "htf_bias": "Neutral-Bearish (Pullback)",
+                "h1_bias": "Bearish",
+                "m15_bias": "Bearish",
+                "buy_score": "3.5 / 10",
+                "sell_score": "8.5 / 10"
+            },
+            "scenarios": {
+                "scenario_a": {
+                    "name": "BUY LIMIT (Counter-trend)",
+                    "entry_zone": "$4,145.00 - $4,150.00",
+                    "ideal_entry": "$4,148.00",
+                    "sl": "$4,136.00",
+                    "tp1": "$4,165.00",
+                    "tp2": "$4,185.00",
+                    "tp3": "$4,210.00",
+                    "rr": "1 : 2.50+",
+                    "invalidation": "H4 close di bawah $4,135.00"
+                },
+                "scenario_b": {
+                    "name": "SELL LIMIT (Primary Setup)",
+                    "entry_zone": "$4,214.00 - $4,218.00",
+                    "ideal_entry": "$4,216.50",
+                    "sl": "$4,228.00",
+                    "tp1": "$4,195.00",
+                    "tp2": "$4,178.00",
+                    "tp3": "$4,150.00",
+                    "rr": "1 : 3.35 (ke TP2) / 1 : 5.78 (ke TP3)",
+                    "invalidation": "H1 close di atas $4,228.00"
+                },
+                "scenario_c": {
+                    "name": "WAIT (Breakout / Retest)",
+                    "condition": "Tunggu retest ke $4,216.50 atau breakdown bersih di bawah $4,175.00"
+                }
+            },
+            "entry_priority": {
+                "first": "Scenario B (SELL LIMIT di $4,216.50)",
+                "second": "Scenario C (WAIT)",
+                "third": "Scenario A (BUY LIMIT di $4,148.00)",
+                "verdict": "Jika hanya boleh 1 setup: SCENARIO B (SELL LIMIT di $4,216.50) paling rasional."
+            },
+            "pending_order_safety": {
+                "distance": "357 pips dari harga berjalan ($4,180.80)",
+                "status": "SAFE TO PLACE PENDING ORDER (SELL LIMIT)"
+            },
+            "final_table": {
+                "direction": "SELL",
+                "entry": "$4,216.50",
                 "sl": "$4,228.00",
                 "tp1": "$4,195.00",
                 "tp2": "$4,178.00",
                 "tp3": "$4,150.00",
-                "rr": "1 : 3.35 (ke TP2) / 1 : 5.78 (ke TP3)",
-                "invalidation": "H1 close di atas $4,228.00"
-            },
-            "scenario_c": {
-                "name": "WAIT (Breakout / Retest)",
-                "condition": "Tunggu retest ke $4,216.50 atau breakdown bersih di bawah $4,175.00"
+                "rr": "1 : 3.35",
+                "confidence": "8.5 / 10",
+                "invalidation": "Candle H1 close di atas $4,228.00"
             }
         },
-        "entry_priority": {
-            "first": "Scenario B (SELL LIMIT di $4,216.50)",
-            "second": "Scenario C (WAIT)",
-            "third": "Scenario A (BUY LIMIT di $4,148.00)",
-            "verdict": "Jika hanya boleh 1 setup: SCENARIO B (SELL LIMIT di $4,216.50) paling rasional."
+        {
+            "id": "2026-10-12",
+            "date": "12 OCT 2026",
+            "time": "09:12 UTC",
+            "session_label": "12 OCT 2026 // LONDON SESSION [$4,181.50]",
+            "status_badge": "ARCHIVED",
+            "market_price": "$4,181.50",
+            "market_news": {
+                "xauusd_current": "$4,181.50",
+                "dxy": "102.35 (Stabil)",
+                "us10y": "5.21%",
+                "geopolitics": "Kekhawatiran pasokan komoditas global memicu konsolidasi di rentang sempit.",
+                "fomc_macro": "Pernyataan hawkish pejabat The Fed membatasi potensi penguatan emas.",
+                "fundamental_conclusion": "Bearish Pullback",
+                "news_hours": "15:00 WIB & 19:30 WIB"
+            },
+            "sentiment_liquidity": {
+                "retail_sentiment": "71% Long vs 29% Short",
+                "retail_long_pct": 71,
+                "sentiment_note": "Sentimen didominasi ritel long yang menumpuk stop-loss di bawah $4,160.",
+                "institutional_cot": "Institusi menjaga level resistance swing $4,195.",
+                "stop_loss_clusters": "Sell stops terkonsentrasi di $4,160 - $4,145."
+            },
+            "mtf_analysis": {
+                "tf_1d": "Uptrend makro menguji supply zone harian.",
+                "tf_4h": "Konsolidasi di bawah resistance $4,200.",
+                "tf_1h": "Lower High terbentuk di $4,192.00.",
+                "tf_15m": "Ranging sempit dengan bias seller.",
+                "levels": "R1: $4,192.00 | R2: $4,205.00 | S1: $4,160.00 | S2: $4,146.00"
+            },
+            "fibonacci": {
+                "swing_high": "$4,215.00",
+                "swing_low": "$4,152.00",
+                "fib_0382": "$4,176.00",
+                "fib_0500": "$4,183.50",
+                "fib_0618": "$4,190.90",
+                "fib_0786": "$4,201.50",
+                "fib_0886": "$4,207.80",
+                "confluence": "Area $4,181.50 bertepatan dengan 0.500 Fib & Bearish Order Block M30."
+            },
+            "ma_indicators": {
+                "tf_1h": "MA 8 di bawah EMA 55 menandakan rejection konsisten.",
+                "tf_15m": "MA 8 bertindak sebagai resistance dinamis."
+            },
+            "patterns": {
+                "pattern": "Descending Triangle pada TF 1H",
+                "validation": "Penolakan candle berulang di $4,190",
+                "invalidation": "Candle H1 close di atas $4,195.00"
+            },
+            "bias_scoring": {
+                "htf_bias": "Neutral",
+                "h1_bias": "Bearish",
+                "m15_bias": "Bearish",
+                "buy_score": "3.0 / 10",
+                "sell_score": "8.0 / 10"
+            },
+            "scenarios": {
+                "scenario_b": {
+                    "name": "SELL LIMIT (Primary Setup)",
+                    "entry_zone": "$4,180.00 - $4,185.00",
+                    "ideal_entry": "$4,181.50",
+                    "sl": "$4,192.00",
+                    "tp1": "$4,165.00",
+                    "tp2": "$4,146.00",
+                    "tp3": "$4,130.00",
+                    "rr": "1 : 3.38",
+                    "invalidation": "Candle H1 close di atas $4,192.00",
+                    "reason": "Rejection Bearish OB H1 + 0.500 Fib retracement"
+                },
+                "scenario_a": {
+                    "name": "BUY LIMIT (Support Retest)",
+                    "entry_zone": "$4,142.00 - $4,146.00",
+                    "ideal_entry": "$4,145.00",
+                    "sl": "$4,135.00",
+                    "tp1": "$4,160.00",
+                    "tp2": "$4,175.00",
+                    "tp3": "$4,190.00",
+                    "rr": "1 : 3.00",
+                    "invalidation": "H4 close di bawah $4,135.00",
+                    "reason": "Major Support demand block"
+                },
+                "scenario_c": {
+                    "name": "WAIT",
+                    "condition": "Tunggu konfirmasi penolakan di area $4,181.50."
+                }
+            },
+            "entry_priority": {
+                "first": "Scenario B (SELL LIMIT di $4,181.50)",
+                "second": "Scenario C (WAIT)",
+                "third": "Scenario A (BUY LIMIT di $4,145.00)",
+                "verdict": "SCENARIO B (SELL LIMIT di $4,181.50) paling rasional."
+            },
+            "pending_order_safety": {
+                "distance": "180 pips dari running market",
+                "status": "SAFE TO PLACE PENDING ORDER"
+            },
+            "final_table": {
+                "direction": "SELL",
+                "entry": "$4,181.50",
+                "sl": "$4,192.00",
+                "tp1": "$4,165.00",
+                "tp2": "$4,146.00",
+                "tp3": "$4,130.00",
+                "rr": "1 : 3.38",
+                "confidence": "8.2 / 10",
+                "invalidation": "Candle H1 close di atas $4,192.00"
+            }
         },
-        "pending_order_safety": {
-            "distance": "357 pips dari harga berjalan ($4,180.80)",
-            "status": "SAFE TO PLACE PENDING ORDER (SELL LIMIT)"
-        },
-        "final_table": {
-            "direction": "SELL",
-            "entry": "$4,216.50",
-            "sl": "$4,228.00",
-            "tp1": "$4,195.00",
-            "tp2": "$4,178.00",
-            "tp3": "$4,150.00",
-            "rr": "1 : 3.35",
-            "confidence": "8.5 / 10",
-            "invalidation": "Candle H1 close di atas $4,228.00"
+        {
+            "id": "2026-10-08",
+            "date": "08 OCT 2026",
+            "time": "07:25 UTC",
+            "session_label": "08 OCT 2026 // ASIA-LONDON [$4,127.00]",
+            "status_badge": "ARCHIVED",
+            "market_price": "$4,127.00",
+            "market_news": {
+                "xauusd_current": "$4,127.00",
+                "dxy": "102.15 (Bullish Flag)",
+                "us10y": "5.18%",
+                "geopolitics": "Pasar mencermati data tenaga kerja AS dan rilis klaim pengangguran mingguan.",
+                "fomc_macro": "Sentimen risk-off moderat menyokong mata uang USD.",
+                "fundamental_conclusion": "Neutral-Bearish",
+                "news_hours": "19:30 WIB"
+            },
+            "sentiment_liquidity": {
+                "retail_sentiment": "68% Long vs 32% Short",
+                "retail_long_pct": 68,
+                "sentiment_note": "Ritel mengakumulasi posisi buy di support $4,120.",
+                "institutional_cot": "Distribusi bertahap dari level $4,140.",
+                "stop_loss_clusters": "Sell stops di bawah $4,120 dan $4,105."
+            },
+            "mtf_analysis": {
+                "tf_1d": "Koreksi teknikal harian pasca rally kuartalan.",
+                "tf_4h": "Struktur sideways dalam rentang $4,110 - $4,145.",
+                "tf_1h": "Rejection di resistance MA 55.",
+                "tf_15m": "Lower highs berturut-turut.",
+                "levels": "R1: $4,135.00 | R2: $4,145.00 | S1: $4,115.00 | S2: $4,100.00"
+            },
+            "fibonacci": {
+                "swing_high": "$4,165.00",
+                "swing_low": "$4,105.00",
+                "fib_0382": "$4,127.90",
+                "fib_0500": "$4,135.00",
+                "fib_0618": "$4,142.10",
+                "fib_0786": "$4,152.10",
+                "fib_0886": "$4,158.10",
+                "confluence": "Area $4,127 - $4,130 bertepatan dengan 0.382 Fib & supply lokal."
+            },
+            "ma_indicators": {
+                "tf_1h": "MA 8 di bawah EMA 55 (Bearish Cross)",
+                "tf_15m": "Slope bearish konsisten"
+            },
+            "patterns": {
+                "pattern": "Bear Flag Retracement",
+                "validation": "Breakdown di bawah $4,125",
+                "invalidation": "Close di atas $4,137"
+            },
+            "bias_scoring": {
+                "htf_bias": "Neutral",
+                "h1_bias": "Bearish",
+                "m15_bias": "Bearish",
+                "buy_score": "3.5 / 10",
+                "sell_score": "7.5 / 10"
+            },
+            "scenarios": {
+                "scenario_b": {
+                    "name": "SELL LIMIT",
+                    "entry_zone": "$4,126.00 - $4,130.00",
+                    "ideal_entry": "$4,127.00",
+                    "sl": "$4,137.00",
+                    "tp1": "$4,120.00",
+                    "tp2": "$4,115.00",
+                    "tp3": "$4,105.00",
+                    "rr": "1 : 2.40",
+                    "invalidation": "Candle H1 close di atas $4,137.00",
+                    "reason": "Rejection resistance MA 8 & 0.382 Fib"
+                },
+                "scenario_a": {
+                    "name": "BUY LIMIT",
+                    "entry_zone": "$4,105.00 - $4,110.00",
+                    "ideal_entry": "$4,108.00",
+                    "sl": "$4,098.00",
+                    "tp1": "$4,120.00",
+                    "tp2": "$4,130.00",
+                    "tp3": "$4,145.00",
+                    "rr": "1 : 2.20",
+                    "invalidation": "H4 close di bawah $4,095.00",
+                    "reason": "Swing low liquidity pool"
+                },
+                "scenario_c": {
+                    "name": "WAIT",
+                    "condition": "Tunggu rejection bersih di $4,127.00."
+                }
+            },
+            "entry_priority": {
+                "first": "Scenario B (SELL LIMIT di $4,127.00)",
+                "second": "Scenario C (WAIT)",
+                "third": "Scenario A (BUY LIMIT di $4,108.00)",
+                "verdict": "SCENARIO B (SELL LIMIT di $4,127.00) paling realistis."
+            },
+            "pending_order_safety": {
+                "distance": "120 pips dari running price",
+                "status": "SAFE TO PLACE PENDING ORDER"
+            },
+            "final_table": {
+                "direction": "SELL",
+                "entry": "$4,127.00",
+                "sl": "$4,137.00",
+                "tp1": "$4,120.00",
+                "tp2": "$4,115.00",
+                "tp3": "$4,105.00",
+                "rr": "1 : 2.40",
+                "confidence": "7.8 / 10",
+                "invalidation": "Candle H1 close di atas $4,137.00"
+            }
         }
-    }
+    ]
 };
